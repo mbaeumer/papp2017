@@ -1,0 +1,80 @@
+<div>
+    <br>
+    <br>
+    <h2>Mina rapporter</h2>
+    <a class="btn" href="#/createInspection">
+    	<span>L&auml;gg till rapport</span>
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a class="btn" href ng-click="handleShift('Start')" >
+        <span>Starta arbetspass</span>
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a class="btn" href ng-click="handleShift('Stop')" >
+        <span>Sluta arbetspass</span>
+        <i class="glyphicon glyphicon-stop"></i>
+    </a>
+    
+    <div class="block" ng-show="shiftType!=''">
+		<div class="block">
+        	<label>Restid:</label>
+    	</div>
+        <div class="block">            
+            <select ng-model="selectedTravelHour" ng-disabled="shiftType === 'Start'" ng-options="h.value for h in hours"></select>
+            <select ng-model="selectedTravelMinute" ng-disabled="shiftType === 'Start'" ng-options="m.value for m in minutes"></select>
+        </div>
+        <div class="block">
+        	<label>Start:</label>
+    	</div>
+        <div class="block">
+            <select ng-model="selectedStartHour" ng-options="h.value for h in hours"></select>
+            <select ng-model="selectedStartMinute" ng-options="m.value for m in minutes"></select>
+        </div>
+        <div class="block">
+        	<label>Stop:</label>
+    	</div>
+        <div class="block">            
+            <select ng-model="selectedStopHour" ng-options="h.value for h in hours"></select>
+            <select ng-model="selectedStopMinute" ng-options="m.value for m in minutes"></select>
+        </div>
+	    
+	    <div class="block">
+	    	<a class="btn" href ng-click="saveShift()" >
+			    <span>Spara</span>
+			    <i class="glyphicon glyphicon-floppy-disk"></i>
+	    	</a>
+	    	<a class="btn" href ng-click="cancelShift()">
+			    <span>Avbryt</span>
+			    <i class="glyphicon glyphicon-arrow-left"></i>
+	    	</a>
+	    </div>
+    </div>
+    
+    <em ng-show="reports.length == 0">Inga rapporter registrerade.</em>
+    <table ng-hide="reports.length == 0"
+           class="table table-striped override-bootstrap">
+        <thead>
+            <tr>
+                <th>Restid</th>
+                <th>Start</th>
+                <th>Stop</th>
+                <th>Omr&aring;de</th>
+                <th>K</th>
+                <th>V</th>
+                <th>M</th>
+            </tr>
+        </thead>
+        <!-- The table is built using the AngularJS repeat function, iterating over the topics variable, and ordering by the property specified in the orderBy variable -->
+        <tr ng-repeat="report in reports">
+            <td>{{report.travel | date: 'HH:mm'}}</td>
+            <td>{{report.startTime | date: 'HH:mm'}}</td>
+            <td>{{report.endTime | date: 'HH:mm'}}</td>
+            <td>{{report.area.code !==0 ? report.area.code : report.activityType.description  }}</td>
+            <td>{{report.fined}}</td>
+            <td>{{report.warnings}}</td>
+            <td>{{report.obliterated}}</td>
+            <td><a class="btn-link" ng-click="editInspection(report.id)"><i class="glyphicon glyphicon-pencil"></i></a></td>
+            <td><a class="btn-link" ng-click="deleteInspection(report.id)"><i class="glyphicon glyphicon-remove"></i></a></td>
+        </tr>
+    </table>    
+</div>

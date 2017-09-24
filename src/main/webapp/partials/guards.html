@@ -1,0 +1,23 @@
+<div ng-controller="guardController">
+    <br>
+    <br>
+    <h2>Vakter</h2>
+    <div class="btn" ng-click="createGuard()" >
+        <span>L&auml;gg till vakt</span>
+        <i class="glyphicon glyphicon-plus"></i>
+    </div>
+    <em ng-show="guards.length == 0">Inga vakter registrerade.</em>
+    <table ng-hide="guards.length == 0"
+           class="table table-striped override-bootstrap">
+        <thead>
+        <tr>
+            <th>Namn</th>
+            <th>Tj&auml;nstenummer</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="guard in guards">
+            <td>{{guard.name}}</td>
+            <td>{{guard.code}}</td>
+        </tr>
+    </table>
+</div>

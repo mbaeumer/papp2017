@@ -1,0 +1,26 @@
+<div ng-controller="userController">
+    <br>
+    <br>
+    <h2>Anv&auml;ndare</h2>
+    <a class="btn" href="#/createUser">
+    	<span>L&auml;gg till anv&auml;ndare</span>
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <em ng-show="users.length == 0">Inga anv&auml;ndare registrerade.</em>
+    <table ng-hide="users.length == 0"
+           class="table table-striped override-bootstrap">
+        <thead>
+        <tr>
+            <th>Namn</th>
+            <th>Tj&auml;nstenummer</th>
+            <th>Roll</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="user in users">
+            <td>{{user.name}}</td>
+            <td>{{user.usercode}}</td>
+            <td>{{user.userType.name}}</td>
+            <td><a class="btn-link" ng-click="editUser(user.id)">Redigera <i class="glyphicon glyphicon-pencil"></i></a></td>
+        </tr>
+    </table>
+</div>
