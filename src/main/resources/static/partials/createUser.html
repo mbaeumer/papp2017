@@ -1,0 +1,24 @@
+<form ng-submit="saveUser()">
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<h2>{{title}}</h2>    
+    <div class="modal-body">
+        <div class="block">
+            <label>Namn:</label>
+            <input required ng-model="entity.name"type="text"/>
+        </div>
+        <div class="block">
+            <label>Tj&auml;nstenummer:</label>
+            <input required type="number" ng-model="entity.usercode" />
+        </div>
+        <div class="block">
+            <label>Roll</label>
+            <select ng-model="selectedRole" ng-options="r.name for r in roles"></select>
+        </div>
+    </div>
+    <input type="button" class="btn" value="Avbryt" ng-click="abortUserCreation()" />
+    <input type="submit" class="btn btn-primary" value="Spara" />
+    <div class="error" ng-show="errorMessage !==''">
+        {{errorMessage}}
+    </div>
+</form>

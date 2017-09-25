@@ -1,0 +1,17 @@
+
+
+<input type="text" ng-model="query.name"
+       placeholder="Skriv område...">
+<table ng-hide="areas.length == 0"
+       class="table table-striped override-bootstrap">
+    <thead>
+    <tr>
+        <th>Namn</th>
+        <th>Kod</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="area in areas | filter: query">
+        <td>{{area.name}}</td>
+        <td>{{area.code}}</td>
+    </tr>
+</table>

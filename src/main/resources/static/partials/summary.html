@@ -1,0 +1,88 @@
+<div>
+    <br>
+    <br>
+    <h2>Sammanfattning</h2>
+    <a class="btn" href="#/createSummary">
+    	<span>L&auml;gg till sammanfattning</span>
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a class="btn" target="_self" href="#/file">
+    	<span>Fil</span>
+        <i class="glyphicon glyphicon-download-alt"></i>
+    </a>
+    <ul class="inline">
+    	<li><a href ng-click="setDateFilter('all')">alla</a></li>
+		<li><a href ng-click="setDateFilter('today')">idag</a></li>
+		<li><a href ng-click="setDateFilter('yesterday')">ig&aring;r</a></li>		
+		<li><a href ng-click="setDateFilter('this_week')">denna vecka</a></li>
+		<li><a href ng-click="setDateFilter('past_week')">f&ouml;rra vecka</a></li>
+		<li><a href ng-click="setDateFilter('this_month')">denna m&aring;nad</a></li>
+		<li><a href ng-click="setDateFilter('past_month')">f&ouml;rra m&aring;nad</a></li>
+		<li>
+			<input
+                  disabled
+                  type="text"
+                  datepicker-popup="{{from.format}}"
+                  ng-model="customDate"
+                  is-open="from.opened"
+                  min="from.minDate" max="from.maxDate"
+                  datepicker-options="from.dateOptions"
+                  date-disabled="from.disabled(date, mode)"
+                  ng-required="true"
+                  close-text="{{ from.closeText }}"
+                  ng-change="updateCustomDateFilter();" />
+                  <button class="btn btn-default" ng-click="from.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		</li>
+    </ul>
+    <em ng-show="reports.length == 0">Inga rapporter registrerade.</em>
+    <table ng-hide="reports.length == 0"
+           class="table table-striped override-bootstrap">
+        <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Vakt</th>
+            <th>Område</th>
+            <th>Restid</th>
+            <th>Start</th>
+            <th>Stop</th>
+            <th>Lappar</th>
+            <th>Aktivitet</th>
+            <th>Kategori</th>
+            <th>Tid</th>
+        </tr>
+        </thead>
+        <!-- The table is built using the AngularJS repeat function, iterating over the topics variable, and ordering by the property specified in the orderBy variable -->
+        <tr ng-repeat="report in reports | filter: dateFilter">
+            <td>{{report.inspectionDate | date: 'yyyy-MM-dd'}}</td>
+            <td>{{report.guard.name}} ({{report.guard.usercode}})</td>
+            <td>{{report.area.code !==0 ? report.area.code : report.activityType.description}}</td>
+            <td>{{report.travel | date: 'HH:mm'}}</td>
+            <td>{{report.startTime | date: 'HH:mm'}}</td>
+            <td>{{report.endTime | date: 'HH:mm'}}</td>
+            <td>{{report.fined}}</td>
+            <td>{{report.activityType.code}}</td>
+            <td>{{report.category.code}}</td>
+            <td>{{report.duration.value}}</td>
+            <td><a class="btn-link" ng-click="editSummary(report.id)">Redigera <i class="glyphicon glyphicon-pencil"></i></a></td>
+            <td><a class="btn-link" ng-click="deleteSummary(report.id)">Ta bort <i class="glyphicon glyphicon-remove"></i></a></td>
+        </tr>
+        <tr class="sum">
+        	<td class="sum">&nbsp;</td>
+        	<td class="sum">&nbsp;</td>
+        	<td class="sum">&nbsp;</td>
+        	<td class="sum">&nbsp;</td>
+        	<td class="sum">&nbsp;</td>
+        	<td class="sum_label">Antal kontrollavgifter:</td>
+        	<td class="sum">{{metaSummary.totalFined}}</td>
+        	<td class="sum">&nbsp;</td>
+        	<td class="sum_label">Total tid:</td>
+        	<td class="sum">{{metaSummary.totalTime.value}}</td>
+        	<td class="sum_label">Totaltid decimal:</td>
+        	<td class="sum">{{metaSummary.totalDecimalTime | number: 2}}</td>
+        	<td class="sum_label">Snitt:</td>
+        	<td class="sum">{{metaSummary.average | number: 2}}</td>
+        	<td class="sum" ng-show="{{metaSummary.average !== undefined}}">{{metaSummary.average | number: 2}}</td>
+        	<!-- <td class="sum" ng-show="{{metaSummary.average === undefined}}">-</td> -->
+        </tr>
+    </table>
+</div>

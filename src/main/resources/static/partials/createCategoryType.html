@@ -1,0 +1,20 @@
+<form ng-submit="saveCategoryType()">   
+	<div>&nbsp;</div>
+	<div>&nbsp;</div> 
+    <h2>{{title}}</h2>
+        <div class="block">
+            <label>Kod:</label>
+            <input type="number" required ng-model="entity.code" />
+        </div>
+        <div class="block">
+            <label>Beskrivning:</label>
+            <input type="text" required ng-model="entity.description" />
+        </div>        
+        <input type="button" class="btn" value="Avbryt" ng-click="abortCategoryTypeCreation()" />
+        <input type="submit" class="btn btn-primary" value="Spara" />
+        <div class="error" ng-show="errorMessage !==''">
+        	<div ng-repeat="error in errorMessage">
+        		<div>{{error}}</div>
+        	</div>
+    	</div>
+</form>
