@@ -18,7 +18,7 @@ public class Area {
 	private int id;
 	private int code;
 	private String name;
-	private byte isActive;
+	private boolean isActive;
 	
 	public int getId() {
 		return id;
@@ -38,12 +38,10 @@ public class Area {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public byte getIsActive() {
+	public boolean getIsActive() {
 		return isActive;
 	}
-	public void setIsActive(byte isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	
-
 }

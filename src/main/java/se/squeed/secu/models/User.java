@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // Spring boot
 @Entity
-@Table(name="USER")
-@javax.persistence.SequenceGenerator(name = "SEQ_USER", sequenceName = "SEQ_USER")
+@Table(name="USERS")
+@javax.persistence.SequenceGenerator(name = "SEQ_USERS", sequenceName = "SEQ_USERS")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USERS")
 	@Column(name="ID")
 	private int id;
 
