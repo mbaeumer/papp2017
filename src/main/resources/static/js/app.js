@@ -6,8 +6,13 @@ angular.module('directives',[]);
 var app = angular.module('app', ['services','ngRoute','restServices','directives','ui.bootstrap','ngCookies','angucomplete-alt']);
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
+           when('/home', {templateUrl: '/partials/login.html', controller: 'loginController'}).
+           //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
+           //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
+           when('/login', { templateUrl: '/partials/login.html', controller: 'loginController'}).
+           when('/inspections', {templateUrl: '/partials/inspections.html', controller: 'inspectionController'}).
         /*
-            when('/inspections', {templateUrl: 'partials/inspections.html', controller: 'inspectionController'}).
+
             when('/createInspection', {templateUrl: 'partials/createInspection.html', controller: 'createInspectionController'}).
             when('/editInspection', {templateUrl: 'partials/createInspection.html', controller: 'editInspectionController'}).
             when('/summary', {templateUrl: 'partials/summary.html', controller: 'summaryController'}).
@@ -26,10 +31,7 @@ var app = angular.module('app', ['services','ngRoute','restServices','directives
             when('/createCategory', {templateUrl: 'partials/createCategoryType.html', controller: 'createCategoryTypeController'}).
             when('/editCategory', {templateUrl: 'partials/createCategoryType.html', controller: 'editCategoryTypeController'}).
             */
-            when('/home', {templateUrl: '/partials/login.html', controller: 'loginController'}).
-            //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
-            //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
-            when('/login', { templateUrl: '/partials/login.html', controller: 'loginController'}).
+
             otherwise({
                 redirectTo : '/home'
             });

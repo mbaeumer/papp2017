@@ -1,8 +1,8 @@
 var services = angular.module('services');
 services.factory('urlService',function($http){
     return {
-        baseRESTURL : 'http://papp-softhouse.rhcloud.com/rest/',
-		//baseRESTURL : 'http://localhost:9090/securitas/rest/',
+        //baseRESTURL : 'http://papp-softhouse.rhcloud.com/rest/',
+		baseRESTURL : 'http://localhost:9090/',
         userURL: 'users/',
         inspectionURL: 'inspections/',
         categoryURL: 'categories/',

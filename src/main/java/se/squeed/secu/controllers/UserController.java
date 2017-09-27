@@ -43,7 +43,10 @@ public class UserController {
     @RequestMapping(value="login", method=RequestMethod.POST)
     public User authenticate(@RequestBody Credentials credentials){
         User user = null;
-        user = userRepository.findByUserCodeAndPassword(credentials.getCode(), credentials.getPassword());
+        System.out.println("user code" + credentials.getUsercode());
+        System.out.println("user pwd" + credentials.getPassword());
+
+        user = userRepository.findByUserCodeAndPassword(credentials.getUsercode(), credentials.getPassword());
         if (user != null){
             System.out.println("user found");
         }else{
