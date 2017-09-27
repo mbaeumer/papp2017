@@ -1,43 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="app">
 <head>
     <title>P-app</title>
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/bootstrap/datepicker/datepicker.css">
-    <link rel="stylesheet" href="/css/app.css">
-    <!-- <link rel="stylesheet" href="lib/css/structure.css"/> -->
-    <link rel="stylesheet" href="lib/css/angucomplete-alt.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/datepicker.css"/>
+    <link rel="stylesheet" href="/css/app.css"/>
+    <!--<link rel="stylesheet" href="/css/angucomplete-alt.css"/>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
-<body ng-app="app" ng-controller="appController">
 
+<body ng-controller="appController">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" rel="#/inspections" href="#/inspections">
+                    <img style="max-width:100px; margin-top: -7px;"
+                         src="/images/securitas-logo.jpg"/>
+                </a>
+            </div>
 
-<!-- /TOP MENU -->
-<div class="navbar navbar-default navbar-fixed-top">
-	<a class="navbar-brand" rel="#/inspections" href="#/inspections">
-        <img style="max-width:100px; margin-top: -7px;"
-             src="/images/securitas-logo.jpg">
-    </a>
-    <ul class="nav nav-pills">
-        <li ng-show="isAccessible()" ng-class="{ active: isActive('/inspections')}"><a href="#/inspections">Rapporter</a></li>
-        <li ng-show="isAdmin()" ng-class="{ active: isActive('/summary')}"><a href="#/summary">Sammanfattning</a></li>
+            <ul class="nav nav-pills">
+                <li ng-show="isAccessible()" ng-class="{ active: isActive('/inspections')}"><a href="#/inspections">Rapporter</a></li>
+                <li ng-show="isAdmin()" ng-class="{ active: isActive('/summary')}"><a href="#/summary">Sammanfattning</a></li>
 
-        <li ng-show="isAdmin()" class="dropdown" ng-class="{ active: isActive('/areas') || isActive('/activityTypes') || isActive('/users') || isActive('/categoryTypes')}">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-            <ul class="dropdown-menu">                
-                <li><a href="#/users">Anv&auml;ndare</a></li>
-                <li><a href="#/areas">Omr&aring;de</a></li>
-                <li><a href="#/activityTypes">Aktivitetstyper</a></li>
-                <li><a href="#/categoryTypes">Kategorityper</a></li>
+                <li ng-show="isAdmin()" class="dropdown" ng-class="{ active: isActive('/areas') || isActive('/activityTypes') || isActive('/users') || isActive('/categoryTypes')}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+                </li>
+                <ul class="dropdown-menu">
+                    <li><a href="#/users">Anv&auml;ndare</a></li>
+                    <li><a href="#/areas">Omr&aring;de</a></li>
+                    <li><a href="#/activityTypes">Aktivitetstyper</a></li>
+                    <li><a href="#/categoryTypes">Kategorityper</a></li>
+                </ul>
+                <div class="nav navbar-nav navbar-right">
+                <ul>
+                    <li ng-show="!isLoggedIn()" class="active"><a data-toggle="collapse" data-target=".navbar-collapse" href="#/login">Login</a></li>
+                    <li ng-show="isLoggedIn()" class="active"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="logout()">Logout</a></li>
+                    <!--<li><a data-toggle="collapse" data-target=".navbar-collapse" href="#/userTypes">User types</a></li>-->
+                </ul>
+                </div>
             </ul>
-    </ul>
-    <div id="top_right">
-        <login></login>
-     </div>
-</div>
-<!-- MAIN PAGE -->
-<!-- /MAIN PAGE -->
+        </div><!-- /.container -->
+    </nav>
 
+    <div ng-view=""></div>
 <!--from glucose -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="/webjars/angularjs/1.4.9/angular.js"></script>
@@ -50,7 +56,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.js"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.js"></script>-->
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.js"></script>
 
 <script src="/js/app.js"></script>
@@ -61,21 +67,22 @@
 
 
 <!-- original -->
-<script src="lib/tooltip.js"></script>
-<script src="lib/parse-options.js"></script>
-<script src="lib/bootstrap/angular-strap-min.js"></script>
-<script src="lib/bootstrap/ui-bootstrap-0.10.0.js"></script>
-<script src="lib/ui-bootstrap-tpls-0.10.0.min.js"></script>
-<script src="lib/angular-touch.js"></script>
+<script src="/js/tooltip.js"></script>
+<script src="/js/parse-options.js"></script>
+<script src="/js/angular-strap-min.js"></script>
+<script src="/js/ui-bootstrap-0.10.0.js"></script>
+<script src="/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
+<script src="/js/angular-touch.js"></script>
 
 <script src="/js/controllers/controllers.js"></script>
+<!--<script src="/js/controllers/appController.js"></script>
 <script src="/js/controllers/inspectionController.js"></script>
 <script src="/js/controllers/createInspectionController.js"></script>
 <script src="/js/controllers/editInspectionController.js"></script>
 <script src="/js/controllers/summaryController.js"></script>
 <script src="/js/controllers/createSummaryController.js"></script>
 <script src="/js/controllers/editSummaryController.js"></script>
-
+-->
 <script src="/js/services/dialogService.js"></script>
 <script src="/js/services/restServices.js"></script>
 <script src="/js/services/loginService.js"></script>
@@ -91,12 +98,12 @@
 <script src="/js/services/metaSummaryService.js"></script>
 <script src="/js/services/filterService.js"></script>
 <script src="/js/services/hostAddressService.js"></script>
+    <script src="/js/services/cookieUtilService.js"></script>
 <script src="/js/services/loginService.js"></script>
 <script src="/js/directives/event.js"></script>
 <script src="/js/directives/login.js"></script>
+<script src="/js/directives/angucomplete-alt.js"></script>
 
 <!-- MAIN CONTENT -->
-<div ng-view id="mainContent">
-</div>
 </body>
 </html>

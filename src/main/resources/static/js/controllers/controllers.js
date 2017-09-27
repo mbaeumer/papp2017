@@ -1,18 +1,54 @@
-function appController($scope, $location, ActivityType, entityService, loginService){
+//var controllers = angular.module('controllers');
+app.controller('appController',function($scope, $location, cookieUtilService, loginService){
 
 	$scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
-    
+
     $scope.isAdmin = function () {
         return loginService.currentUserType !== 'vakt' && loginService.currentUserId !== 0;
     };
-    
+
     $scope.isAccessible = function () {
         return loginService.currentUserId !== 0;
-    };   
-};
+    };
 
+    $scope.isLoggedIn = function(){
+        return cookieUtilService.isCookieValid();
+    }
+
+    $scope.logout = function(){
+        cookieUtilService.invalidateCookies();
+        $location.path('/home');
+    }
+
+
+});
+
+app.controller('loginController', function($scope, $location, $cookies, $cookieStore, loginService, cookieUtilService) {
+    $scope.headingTitle = "Logga in";
+    $scope.usercode = '';
+    $scope.password = '';
+
+    $scope.login = function(){
+        $scope.credentials = {};
+        $scope.credentials.usercode = $scope.usercode;
+        $scope.credentials.password = $scope.password;
+        loginService.login($scope.credentials, $scope.loginSuccessCallback, $scope.loginErrorCallback);
+    }
+
+    $scope.loginSuccessCallback = function(data){
+        cookieUtilService.initCookies(data);
+        $location.path("/glucose");
+    }
+
+    $scope.loginErrorCallback = function(data){
+        $scope.errorMessage = data;
+    }
+});
+
+
+/*
 function activityTypeController($scope, $location, ActivityType, entityService, loginService){
 
 	if (loginService.currentUserId === 0){
@@ -404,6 +440,7 @@ function profileController($scope, $location, entityService, loginService, User,
     	$location.path("/inspections");
     };
 };
+*/
 
 
 

@@ -4,15 +4,15 @@ package se.squeed.secu.models;
  * Created by martinbaumer on 11/08/16.
  */
 public class Credentials {
-    private String username;
+    private int code;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public int getCode() {
+        return code;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getPassword() {

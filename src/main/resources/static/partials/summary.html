@@ -54,7 +54,7 @@
         <!-- The table is built using the AngularJS repeat function, iterating over the topics variable, and ordering by the property specified in the orderBy variable -->
         <tr ng-repeat="report in reports | filter: dateFilter">
             <td>{{report.inspectionDate | date: 'yyyy-MM-dd'}}</td>
-            <td>{{report.guard.name}} ({{report.guard.usercode}})</td>
+            <td>{{report.guard.name}} ({{report.guard.userCode}})</td>
             <td>{{report.area.code !==0 ? report.area.code : report.activityType.description}}</td>
             <td>{{report.travel | date: 'HH:mm'}}</td>
             <td>{{report.startTime | date: 'HH:mm'}}</td>

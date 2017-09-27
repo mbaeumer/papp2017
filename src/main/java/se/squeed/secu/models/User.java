@@ -15,7 +15,7 @@ public class User {
 
 	//@UniqueConstraint("USERCODE")
 	@Column(name="USERCODE")
-	private int usercode;
+	private int userCode;
 
 	@Column(name = "NAME")
 	private String firstName;
@@ -43,11 +43,11 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public int getUsercode() {
-		return usercode;
+	public int getUserCode() {
+		return userCode;
 	}
-	public void setUsercode(int usercode) {
-		this.usercode = usercode;
+	public void setUserCode(int userCode) {
+		this.userCode = userCode;
 	}
 
 	public String getPassword() {
@@ -71,13 +71,13 @@ public class User {
 @SuppressWarnings("serial")
 @Entity
 @XmlRootElement
-@Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = "usercode"))
+@Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = "userCode"))
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	private int usercode;
+	private int userCode;
 	private String password;
 
 	@OneToOne(optional=true,fetch=FetchType.EAGER)
@@ -95,11 +95,11 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getUsercode() {
-		return usercode;
+	public int getUserCode() {
+		return userCode;
 	}
-	public void setUsercode(int usercode) {
-		this.usercode = usercode;
+	public void setUserCode(int userCode) {
+		this.userCode = userCode;
 	}
 	public UserType getUserType() {
 		return userType;
