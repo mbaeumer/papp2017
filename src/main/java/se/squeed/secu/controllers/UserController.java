@@ -31,15 +31,12 @@ public class UserController {
         if (users != null){
             System.out.println("...in UserController - found some users");
             System.out.println("Number of user types: " + users.size());
-            for  (User user : users){
-                //System.out.println(user.getUserName());
-            }
+
             model.addAttribute("entries", users);
         }
         return users;
     }
 
-    //@CrossOrigin(origins = "http://glucometriq.herokuapp.com")
     @RequestMapping(value="login", method=RequestMethod.POST)
     public User authenticate(@RequestBody Credentials credentials){
         User user = null;
@@ -51,7 +48,6 @@ public class UserController {
             System.out.println("user found");
         }else{
             System.out.println("no user found");
-            //throw new SQLException("");
         }
         return user;
     }
