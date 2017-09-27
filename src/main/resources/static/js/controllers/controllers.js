@@ -47,7 +47,7 @@ app.controller('loginController', function($scope, $location, $cookies, $cookieS
     }
 });
 
-app.controller('inspectionController',function($scope, $location, Inspection, loginService, entityService, inspectionService, areaService){
+app.controller('inspectionController',function($scope, $location, Inspection, loginService, entityService, inspectionService, areaService, cookieUtilService){
 
 	if (loginService.currentUserId === 0){
 		$location.path("/home");
@@ -178,7 +178,10 @@ app.controller('inspectionController',function($scope, $location, Inspection, lo
     };
 
     if (loginService.currentUserId !== 0){
-    	inspectionService.getMyInspections($scope.successCallback, $scope.errorCallback);
+     userid = cookieUtilService.getUserId();
+     $scope.requestData = {};
+     $scope.requestData.userid = userid;
+     inspectionService.getMyInspections($scope.requestData, $scope.successCallback, $scope.errorCallback);
     }
 
     $scope.hours = [{id: 0, value: '00'},{id: 1,value: '01'},{id: 2,value: '02'},
@@ -553,32 +556,6 @@ function fileController($scope, $location, loginService, Area, entityService, fi
     fileService.getFile($scope.successCallback, $scope.errorCallback);
 };
 
-function loginController($scope, loginService, $location){
-    $scope.username = '';
-    $scope.password= '';
-
-    $scope.login = function(){
-        loginService.login($scope.username,$scope.password, $scope.loggedInCallback,$scope.loggedInErrorCallback);
-    };
-
-    $scope.logout = function(){
-    	loginService.logout();
-    	$location.path("/home");
-    };
-        
-    $scope.loggedInCallback = function(){
-        $location.path("/inspections");
-    };
-
-    $scope.loggedInErrorCallback = function(message){
-        $scope.errorMessage = message;
-    };
-
-    $scope.setUser = function(){
-        $scope.username = 'Zlatan';
-        $scope.password = 'Zlatan';
-    };
-};
 
 function profileController($scope, $location, entityService, loginService, User, UserType, userService){
 

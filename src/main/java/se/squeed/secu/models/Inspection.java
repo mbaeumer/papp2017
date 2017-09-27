@@ -2,16 +2,8 @@ package se.squeed.secu.models;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="INSPECTION")
@@ -21,29 +13,35 @@ public class Inspection {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@Column(name="COMPANYCODE")
 	private int companyCode;
+	@Column(name="TRAVELTIME")
 	private Date travel;
+	@Column(name="STARTTIME")
 	private Date startTime;
+	@Column(name="ENDTIME")
 	private Date endTime;
+	@Column(name="INSPECTIONTIME")
 	private Date inspectionDate;
+
 	private int fined;
 	private int warnings;
 	private int obliterated;
 	
 	@OneToOne(optional=true,fetch=FetchType.EAGER)
-    @JoinColumn(name="areaID")
+    @JoinColumn(name="AREAID")
 	private Area area;
 	
 	@OneToOne(optional=true,fetch=FetchType.EAGER)
-    @JoinColumn(name="userID")
-	private User guard;
+    @JoinColumn(name="USERID")
+	private User user;
 	
 	@OneToOne(optional=true,fetch=FetchType.EAGER)
-    @JoinColumn(name="activityTypeID")
+    @JoinColumn(name="ACTIVITYTYPEID")
 	private ActivityType activityType;
 	
 	@OneToOne(optional=true,fetch=FetchType.EAGER)
-    @JoinColumn(name="categoryID")
+    @JoinColumn(name="CATEGORYID")
 	private Category category;
 	
 	public int getId() {
@@ -94,11 +92,11 @@ public class Inspection {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-	public User getGuard() {
-		return guard;
+	public User getUser() {
+		return user;
 	}
-	public void setGuard(User guard) {
-		this.guard = guard;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public ActivityType getActivityType() {
 		return activityType;
@@ -124,6 +122,4 @@ public class Inspection {
 	public void setCompanyCode(int companyCode) {
 		this.companyCode = companyCode;
 	}
-	
-
 }
