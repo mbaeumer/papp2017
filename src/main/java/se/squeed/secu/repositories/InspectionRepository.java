@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface InspectionRepository extends JpaRepository<Inspection, String> {
     List<Inspection> findInspectionsByUserAndInspectionDate(User user, Date date);
+    Inspection findLatestByUserAndInspectionDateOrderByEndTime(User user, Date date);
 }

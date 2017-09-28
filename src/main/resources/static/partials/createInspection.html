@@ -2,10 +2,19 @@
 	<div>&nbsp;</div>
 	<div>&nbsp;</div>
     <h2 ng-cloak>{{title}}</h2>
-    	<div class="block">
-    		<label>Datum:</label>
-    	</div>
-        <div class="block">        	
+        <div class="block">
+            <label>Date: </label>
+        </div>
+        <div class="block">
+            <md-content>
+                <md-datepicker
+                        ng-model="entity.inspectionDate"
+                        md-placeholder="Enter date">
+                </md-datepicker>
+            </md-content>
+        </div>
+<!--
+        <div class="block">
             <input
                   disabled
                   type="text"
@@ -20,6 +29,7 @@
                   ng-change="update();" />
                   <button class="btn btn-default" ng-click="from.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </div>
+-->
         <div class="block">
         	<label>Restid:</label>
     	</div>

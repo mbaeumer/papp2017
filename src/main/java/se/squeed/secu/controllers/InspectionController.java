@@ -1,16 +1,14 @@
 package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import se.squeed.secu.models.Credentials;
+import org.springframework.web.bind.annotation.*;
 import se.squeed.secu.models.Inspection;
 import se.squeed.secu.models.RequestData;
 import se.squeed.secu.models.User;
 import se.squeed.secu.repositories.InspectionRepository;
 
+import javax.persistence.NoResultException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,4 +34,22 @@ public class InspectionController {
         inspections = inspectionRepository.findInspectionsByUserAndInspectionDate(user, requestData.getDate());
         return inspections;
     }
+
+    @RequestMapping(value="latest", method= RequestMethod.POST)
+    public Inspection findLatest(@RequestBody RequestData requestData)  {
+        User user = new User();
+        user.setId(requestData.getUserid());
+        Date inspectionDate = requestData.getDate();
+        Inspection latestInspection = null;
+
+        try{
+            latestInspection = inspectionRepository.findLatestByUserAndInspectionDateOrderByEndTime(user, inspectionDate);
+        }catch(NoResultException e){
+
+        }
+        return latestInspection;
+    }
+
+
+
 }
