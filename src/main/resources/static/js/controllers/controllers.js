@@ -307,7 +307,6 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
         inspectionService.getLatestInspection(cookieUtilService.getUserId(), strDate, $scope.updateSuccessCallback, $scope.errorCallback);
     };
 
-    //var strDate = new Date($scope.entity.inspectionDate).toString("MM/dd/yyyy");
     inspectionService.getLatestInspection(cookieUtilService.getUserId(), new Date($scope.entity.inspectionDate), $scope.updateSuccessCallback, $scope.errorCallback);
 
     areaService.getAllAreas($scope.successAreaCallback, $scope.errorCallback);
@@ -315,9 +314,6 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     if (loginService.currentUserId === 0){
 		$location.path("/home");
 	}
-
-    //$scope.from = datePickerService.createConfig({ minDate : '2014-01-01', maxDate : '2019-01-01'});
-    //$scope.to = datePickerService.createConfig({ minDate : '2014-01-01', maxDate : '2019-01-01'});
 
     $scope.title = "Registrera ny rapport";
 

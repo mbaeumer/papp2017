@@ -108,6 +108,13 @@ INSERT INTO USERS (ID, NAME, PASSWORD, USERCODE, USERTYPEID) VALUES (63, 'Nuh ki
 -- categories
 
 -- areas
+INSERT INTO AREA (ID, CODE, NAME, ISACTIVE) VALUES
+(1, 3844, 'Adolf Edelsvärds Gata', TRUE),
+(2, 1428, 'Allmänna Vägen 2B', TRUE),
+(3, 1418, 'Almedalsvägen BILIA', FALSE),
+(4, 1009, 'Amerikaskjulet', TRUE),
+(5, 1330, 'Amiralitetsgatan 24 A-S', TRUE);
+
 
 -- activitytypes
 INSERT INTO ACTIVITYTYPE (ID, CODE, DESCRIPTION) VALUES (1, 0, '-');

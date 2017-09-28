@@ -1,11 +1,6 @@
 package se.squeed.secu.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
@@ -18,6 +13,7 @@ public class Area {
 	private int id;
 	private int code;
 	private String name;
+	@Column(name="ISACTIVE")
 	private boolean isActive;
 	
 	public int getId() {
