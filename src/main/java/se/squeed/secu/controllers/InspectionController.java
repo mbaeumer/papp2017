@@ -46,11 +46,12 @@ public class InspectionController {
     @RequestMapping(value="latest", method= RequestMethod.POST)
     public Inspection findLatest(@RequestBody RequestData requestData)  {
         Inspection latestInspection = null;
-        try{
-            latestInspection = inspectionRepository.findLatestByUserIdAndInspectionDateOrderByEndTime(requestData.getUserid(), requestData.getDate());
+        User user = new User();
+        user.setId(requestData.getUserid());
+        List<Inspection> inspections = inspectionRepository.findInspectionsByUserAndInspectionDateOrderByEndTimeDesc(user, requestData.getDate());
+        if (inspections.size() > 0){
+            latestInspection = inspections.get(0);
             System.out.println("getting latest inspections for: " + requestData.getUserid());
-        }catch(NoResultException e){
-
         }
         return latestInspection;
     }
