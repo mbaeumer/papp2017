@@ -25,25 +25,29 @@ public class InspectionController {
         this.inspectionRepository = inspectionRepository;
     }
 
-    @RequestMapping(value="my", method= RequestMethod.POST)
+    @RequestMapping(method=RequestMethod.GET)
+    public List<Inspection> getAll(){
+        return inspectionRepository.findAll();
+    }
+
+    @RequestMapping(value="my", method=RequestMethod.POST)
     public List<Inspection> getMy(@RequestBody RequestData requestData){
         List<Inspection> inspections = null;
         User user = new User();
         user.setId(requestData.getUserid());
-        System.out.println("getting inspections for: " + user.getId());
-        inspections = inspectionRepository.findInspectionsByUserAndInspectionDate(user, requestData.getDate());
+        inspections = inspectionRepository.findInspectionsByUser(user);
+        System.out.println("getting my inspections for: " + requestData.getUserid());
+        System.out.println("getting my inspections for date: " + requestData.getDate());
+        System.out.println("no of inspections: " + inspections.size());
         return inspections;
     }
 
     @RequestMapping(value="latest", method= RequestMethod.POST)
     public Inspection findLatest(@RequestBody RequestData requestData)  {
-        User user = new User();
-        user.setId(requestData.getUserid());
-        Date inspectionDate = requestData.getDate();
         Inspection latestInspection = null;
-
         try{
-            latestInspection = inspectionRepository.findLatestByUserAndInspectionDateOrderByEndTime(user, inspectionDate);
+            latestInspection = inspectionRepository.findLatestByUserIdAndInspectionDateOrderByEndTime(requestData.getUserid(), requestData.getDate());
+            System.out.println("getting latest inspections for: " + requestData.getUserid());
         }catch(NoResultException e){
 
         }

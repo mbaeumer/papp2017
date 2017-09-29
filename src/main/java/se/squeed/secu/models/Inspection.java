@@ -3,6 +3,7 @@ package se.squeed.secu.models;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 @Entity
@@ -11,7 +12,7 @@ import javax.persistence.*;
 public class Inspection {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator = "SEQ_INSPECTION")
 	private int id;
 	@Column(name="COMPANYCODE")
 	private int companyCode;
@@ -28,20 +29,24 @@ public class Inspection {
 	private int warnings;
 	private int obliterated;
 	
-	@OneToOne(optional=true,fetch=FetchType.EAGER)
+	@OneToOne
+	@NotNull
     @JoinColumn(name="AREAID")
 	private Area area;
 	
-	@OneToOne(optional=true,fetch=FetchType.EAGER)
+	@OneToOne
+	@NotNull
     @JoinColumn(name="USERID")
 	private User user;
 	
-	@OneToOne(optional=true,fetch=FetchType.EAGER)
+	@OneToOne
+	@NotNull
     @JoinColumn(name="ACTIVITYTYPEID")
 	private ActivityType activityType;
 	
 	@OneToOne(optional=true,fetch=FetchType.EAGER)
-    @JoinColumn(name="CATEGORYID")
+	@NotNull
+	@JoinColumn(name="CATEGORYID")
 	private Category category;
 	
 	public int getId() {

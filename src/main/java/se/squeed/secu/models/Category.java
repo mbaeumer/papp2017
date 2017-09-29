@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @javax.persistence.SequenceGenerator(name = "SEQ_CATEGORY", sequenceName = "SEQ_CATEGORY")
 public class Category {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator = "SEQ_CATEGORY")
 	private int id;
 	private int code;
 	private String description;

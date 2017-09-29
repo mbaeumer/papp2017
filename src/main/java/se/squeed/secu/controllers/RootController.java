@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RootController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homepage() {
-        System.out.print("in RootController");
+        System.out.print("in RootController\n");
         return "index";
     }
 
     @RequestMapping(value = "/glucometriq", method = RequestMethod.GET)
     public String mainpage() {
-        System.out.print("in RootController");
+        System.out.print("in RootController\n");
         return "redirect:/index.html";
     }
 }

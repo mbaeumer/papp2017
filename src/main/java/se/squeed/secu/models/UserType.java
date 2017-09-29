@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @javax.persistence.SequenceGenerator(name = "SEQ_USERTYPE", sequenceName = "SEQ_USERTYPE")
 public class UserType {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USERTYPE")
 	private int id;
 	private String name;
 	public int getId() {

@@ -177,10 +177,13 @@ app.controller('inspectionController',function($scope, $location, Inspection, lo
         $scope.errorMessage = message;
     };
 
-    if (loginService.currentUserId !== 0){
-     userid = cookieUtilService.getUserId();
+    if (cookieUtilService.getUserId() !== 0){
      $scope.requestData = {};
-     $scope.requestData.userid = userid;
+     $scope.requestData.userid = cookieUtilService.getUserId();
+     $scope.requestData.date = new Date();
+     $scope.requestData.date.setHours(18);
+     $scope.requestData.date.setMinutes(00);
+     $scope.requestData.date.setSeconds(00);
      inspectionService.getMyInspections($scope.requestData, $scope.successCallback, $scope.errorCallback);
     }
 

@@ -8,14 +8,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name="ACTIVIITYTYPE")
+@Table(name="ACTIVITYTYPE")
 @javax.persistence.SequenceGenerator(name = "SEQ_ACTIVITYTYPE", sequenceName = "SEQ_ACTIVITYTYPE")
 public class ActivityType {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACTIVITYTYPE")
 	private int id;
 	
 	private int code;

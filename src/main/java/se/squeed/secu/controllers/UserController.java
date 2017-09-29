@@ -30,7 +30,7 @@ public class UserController {
         List<User> users = userRepository.findAll();
         if (users != null){
             System.out.println("...in UserController - found some users");
-            System.out.println("Number of user types: " + users.size());
+            System.out.println("Number of users: " + users.size());
 
             model.addAttribute("entries", users);
         }

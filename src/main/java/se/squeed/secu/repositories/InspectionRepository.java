@@ -11,6 +11,6 @@ import java.util.List;
  * Created by martinbaumer on 27/09/17.
  */
 public interface InspectionRepository extends JpaRepository<Inspection, String> {
-    List<Inspection> findInspectionsByUserAndInspectionDate(User user, Date date);
-    Inspection findLatestByUserAndInspectionDateOrderByEndTime(User user, Date date);
+    List<Inspection> findInspectionsByUser(User user);
+    Inspection findLatestByUserIdAndInspectionDateOrderByEndTime(int userid, Date date);
 }

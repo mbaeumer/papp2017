@@ -30,9 +30,6 @@ services.factory('inspectionService',function($http, loginService, urlService, h
             });          
         },
         getMyInspections : function(requestData, callbackSuccess, callbackError){
-        	var today = new Date();
-        	requestData.date = date;
-
         	$http.post(hostAddressService.hostAddress + 'inspections/my', requestData).then(function(response){
                 if (response.status == 200){
                   callbackSuccess(response.data);
@@ -43,7 +40,6 @@ services.factory('inspectionService',function($http, loginService, urlService, h
         },
         getLatestInspection : function(userid, date, callbackSuccess, callbackError){
             requestData = {}
-            user = {}
             requestData.userid = userid;
             requestData.date = date;
             $http.post(hostAddressService.hostAddress + 'inspections/latest', requestData).then(function(data){
