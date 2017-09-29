@@ -1,6 +1,7 @@
 package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.web.bind.annotation.*;
 import se.squeed.secu.models.Inspection;
 import se.squeed.secu.models.RequestData;
@@ -8,7 +9,7 @@ import se.squeed.secu.models.User;
 import se.squeed.secu.repositories.InspectionRepository;
 
 import javax.persistence.NoResultException;
-import java.util.Date;
+import javax.persistence.TemporalType;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class InspectionController {
         List<Inspection> inspections = null;
         User user = new User();
         user.setId(requestData.getUserid());
-        inspections = inspectionRepository.findInspectionsByUser(user);
+        inspections = inspectionRepository.findInspectionsByUserAndInspectionDateOrderByEndTimeDesc(user, requestData.getDate());
         System.out.println("getting my inspections for: " + requestData.getUserid());
         System.out.println("getting my inspections for date: " + requestData.getDate());
         System.out.println("no of inspections: " + inspections.size());
