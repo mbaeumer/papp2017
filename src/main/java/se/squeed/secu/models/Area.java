@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @javax.persistence.SequenceGenerator(name = "SEQ_AREA", sequenceName = "SEQ_AREA")
 public class Area {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator = "SEQ_AREA")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SEQ_AREA")
 	private int id;
 	private int code;
 	private String name;

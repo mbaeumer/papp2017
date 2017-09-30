@@ -1,8 +1,8 @@
 var services = angular.module('services');
-services.factory('areaService',function($http, urlService){
+services.factory('areaService',function($http, urlService, hostAddressService){
     return {     
     	createArea : function(area, callbackSuccess, callbackError){
-            $http.post(urlService.baseRESTURL + urlService.areaURL, area).then(function(data){
+            $http.post(hostAddressService.hostAddress + 'areas', area).then(function(data){
             	if (data.status == 200){                	
                     callbackSuccess();
                 }
@@ -12,7 +12,7 @@ services.factory('areaService',function($http, urlService){
             });          
         },
         editArea : function(area, callbackSuccess, callbackError){
-            $http.put(urlService.baseRESTURL + urlService.areaURL, area).then(function(data){
+            $http.put(hostAddressService.hostAddress + 'areas', area).then(function(data){
             	if (data.status == 200){                	
                     callbackSuccess();
                 }
@@ -22,7 +22,7 @@ services.factory('areaService',function($http, urlService){
             });          
         },
         getComposedAreas : function(callbackSuccess, callbackError){
-            $http.get(urlService.baseRESTURL + urlService.areaURL + 'composed/').then(function(data){
+            $http.get(hostAddressService.hostAddress + 'areas/composed/').then(function(data){
             	if (data.status == 200 && data.data !== undefined){       					
                     callbackSuccess(data.data);
                 }
@@ -32,7 +32,7 @@ services.factory('areaService',function($http, urlService){
             });          
         },
         getPseudoArea : function(callbackSuccess, callbackError){
-            $http.get(urlService.baseRESTURL + urlService.areaURL + 'pseudo/').then(function(data){
+            $http.get(hostAddressService.hostAddress + 'areas/pseudo/').then(function(data){
             	if (data.status == 200 && data.data !== undefined){       					
                     callbackSuccess(data.data);
                 }
@@ -42,7 +42,7 @@ services.factory('areaService',function($http, urlService){
             });          
         },
         getAllAreas : function(callbackSuccess, callbackError){
-            $http.get(urlService.baseRESTURL + urlService.areaURL+ 'composed/' ).then(function(data){
+            $http.get(hostAddressService.hostAddress + 'areas/composed/' ).then(function(data){
             	if (data.status == 200 && data.data !== undefined){       					
                     callbackSuccess(data.data);
                 }

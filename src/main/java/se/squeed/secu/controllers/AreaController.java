@@ -43,7 +43,11 @@ public class AreaController {
             ca.setIsActive(a.getIsActive());
             composedAreas.add(ca);
         }
-        //model.addAttribute("entries", composedAreas);
         return composedAreas;
+    }
+
+    @RequestMapping(value="/pseudo", method= RequestMethod.GET)
+    public Area findPseudoArea(){
+        return areaRepository.findByCode(0);
     }
 }

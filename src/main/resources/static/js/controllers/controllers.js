@@ -1,4 +1,4 @@
-app.controller('appController',function($scope, $location, cookieUtilService, loginService){
+app.controller('appController',function($scope, $location, cookieUtilService){
 
 	$scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
@@ -16,10 +16,6 @@ app.controller('appController',function($scope, $location, cookieUtilService, lo
         }
         result = cookieUtilService.getUserType() !== undefined && usertype != '1';
         return result;
-    };
-
-    $scope.isAccessible = function () {
-        return loginService.currentUserId !== 0;
     };
 
     $scope.isLoggedIn = function(){
@@ -105,18 +101,19 @@ app.controller('inspectionController',function($scope, $location, loginService, 
     };
 
     $scope.saveShift = function () {
-    	var inspection = new Inspection();
+    	var inspection = {};
     	inspection.inspectionDate = new Date($scope.today);
     	inspection.travel = new Date(inspection.inspectionDate.getTime());
     	inspection.startTime = new Date(inspection.inspectionDate.getTime());
     	inspection.endTime = new Date(inspection.inspectionDate.getTime());
 
-    	inspection.inspectionDate = inspection.inspectionDate.addHours(12);
-
-    	inspection.startTime = inspection.startTime.addHours(parseInt($scope.selectedStartHour.value));
-    	inspection.startTime = inspection.startTime.addMinutes(parseInt($scope.selectedStartMinute.value));
-    	inspection.endTime = inspection.endTime.addHours(parseInt($scope.selectedStopHour.value));
-    	inspection.endTime = inspection.endTime.addMinutes(parseInt($scope.selectedStopMinute.value));
+        inspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setMinutes(00);
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setSeconds(00);
+    	inspection.startTime = new Date(inspection.startTime).setHours(parseInt($scope.selectedStartHour.value));
+    	inspection.startTime = new Date(inspection.startTime).setMinutes(parseInt($scope.selectedStartMinute.value));
+    	inspection.endTime = new Date(inspection.endTime).setHours(parseInt($scope.selectedStopHour.value));
+    	inspection.endTime = new Date(inspection.endTime).setMinutes(parseInt($scope.selectedStopMinute.value));
 
     	inspection.fined = 0;
     	inspection.warnings = 0;
@@ -124,31 +121,31 @@ app.controller('inspectionController',function($scope, $location, loginService, 
 
     	inspection.companyCode = entityService.currentCompanyCode;
 
-    	inspection.guard = { id: loginService.currentUserId};
+    	inspection.user = { id: cookieUtilService.getUserId()};
     	// set the activity type
     	if ($scope.shiftType === 'Start'){
-    		inspection.travel = new Date(inspection.startTime.getTime());
+    		inspection.travel = new Date(inspection.startTime);
     		inspection.activityType = { id: 2, code: 1, description: 'Start'};
     	}else if ($scope.shiftType === 'Stop'){
-    		inspection.travel = inspection.travel.addHours(parseInt($scope.selectedTravelHour.value));
-        	inspection.travel = inspection.travel.addMinutes(parseInt($scope.selectedTravelMinute.value));
+    		inspection.travel = new Date(inspection.travel).setHours(parseInt($scope.selectedTravelHour.value));
+        	inspection.travel = new Date(inspection.travel).setMinutes(parseInt($scope.selectedTravelMinute.value));
     		inspection.activityType = { id: 4, code: 3, description: 'Stop'};
 
     		if (((parseInt($scope.selectedTravelHour.value)) !== parseInt($scope.selectedStartHour.value))
     				|| ((parseInt($scope.selectedTravelMinute.value)) !== parseInt($scope.selectedStartMinute.value))){
 
-    			var travelInspection = new Inspection();
+    			var travelInspection = {};
 
-        		travelInspection.inspectionDate = new Date(inspection.inspectionDate.getTime());
-        		travelInspection.travel = new Date(inspection.inspectionDate.getTime());
-        		travelInspection.startTime = new Date(inspection.inspectionDate.getTime());
-        		travelInspection.endTime = new Date(inspection.startTime.getTime());
+        		travelInspection.inspectionDate = new Date(inspection.inspectionDate);
+        		travelInspection.travel = new Date(inspection.inspectionDate);
+        		travelInspection.startTime = new Date(inspection.inspectionDate);
+        		travelInspection.endTime = new Date(inspection.startTime);
 
         		var strDate = new Date().toString("MM/dd/yyyy");
         		travelInspection.startTime = new Date(strDate);
-        		travelInspection.startTime = travelInspection.startTime.addHours((parseInt($scope.selectedTravelHour.value)));
-        		travelInspection.startTime = travelInspection.startTime.addMinutes((parseInt($scope.selectedTravelMinute.value)));
-        		travelInspection.travel = new Date(travelInspection.startTime.getTime());
+        		travelInspection.startTime = new Date(travelInspection.startTime).setHours((parseInt($scope.selectedTravelHour.value)));
+        		travelInspection.startTime = new Date(travelInspection.startTime).setMinutes((parseInt($scope.selectedTravelMinute.value)));
+        		travelInspection.travel = new Date(travelInspection.startTime);
 
             	travelInspection.fined = 0;
             	travelInspection.warnings = 0;
@@ -156,7 +153,7 @@ app.controller('inspectionController',function($scope, $location, loginService, 
 
             	travelInspection.activityType = { id: 3, code: 2, description: 'Restid'};
             	travelInspection.companyCode = entityService.currentCompanyCode;
-            	travelInspection.guard = { id: loginService.currentUserId};
+            	travelInspection.user = { id: cookieUtilService.getUserId()};
             	travelInspection.category = { id: 1, code: 0, description: 'inga lappar'};
 
             	$scope.inspection = travelInspection;
@@ -195,8 +192,14 @@ app.controller('inspectionController',function($scope, $location, loginService, 
         $scope.selectedStartMinute = $scope.minutes[(now.getMinutes() - now.getMinutes() % 5) / 5];
         $scope.selectedStopHour = $scope.hours[now.getHours()];
         $scope.selectedStopMinute = $scope.minutes[(now.getMinutes() - now.getMinutes() % 5) / 5];
-        // TODO: Send request data
-    	inspectionService.getMyInspections($scope.successCallback, $scope.errorCallback);
+
+        $scope.requestData = {};
+        $scope.requestData.userid = cookieUtilService.getUserId();
+        $scope.requestData.date = new Date();
+         $scope.requestData.date.setHours(18);
+         $scope.requestData.date.setMinutes(00);
+         $scope.requestData.date.setSeconds(00);
+    	inspectionService.getMyInspections($scope.requestData, $scope.successCallback, $scope.errorCallback);
     };
 
     $scope.successCallback = function(data){
