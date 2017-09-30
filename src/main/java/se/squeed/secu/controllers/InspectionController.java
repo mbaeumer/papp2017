@@ -56,6 +56,14 @@ public class InspectionController {
         return latestInspection;
     }
 
+    @RequestMapping(value="/get/{id}", method= RequestMethod.GET)
+    public Inspection getSingleInspection(@PathVariable int id){
+        Inspection inspection = inspectionRepository.findById(id);
+        if (inspection != null){
+            System.out.println("...in getSingleGlucoseMeasurementByUser");
+        }
+        return inspection;
+    }
 
 
 }

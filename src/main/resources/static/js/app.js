@@ -11,11 +11,12 @@ var app = angular.module('app', ['services','ngRoute','restServices','directives
            when('/login', { templateUrl: '/partials/login.html', controller: 'loginController'}).
            when('/inspections', {templateUrl: '/partials/inspections.html', controller: 'inspectionController'}).
            when('/createInspection', {templateUrl: '/partials/createInspection.html', controller: 'createInspectionController'}).
+           when('/editInspection', {templateUrl: '/partials/createInspection.html', controller: 'editInspectionController'}).
         /*
             //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
            //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
 
-            when('/editInspection', {templateUrl: 'partials/createInspection.html', controller: 'editInspectionController'}).
+
             when('/summary', {templateUrl: 'partials/summary.html', controller: 'summaryController'}).
             when('/createSummary', {templateUrl: 'partials/createSummary.html', controller: 'createSummaryController'}).
             when('/editSummary', {templateUrl: 'partials/createSummary.html', controller: 'editSummaryController'}).            
