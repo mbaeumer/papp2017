@@ -51,8 +51,8 @@ services.factory('inspectionService',function($http, loginService, urlService, h
                 }
             });
         },
-        deleteInspection : function(idd, successCallback, errorCallback){
-            $http.delete(hostAddressService.hostAddress + 'myglucose' + "/" + id).then(function(response){
+        deleteInspection : function(id, successCallback, errorCallback){
+            $http.delete(hostAddressService.hostAddress + 'inspections' + "/" + id).then(function(response){
                  if (response.status == 200){
                      successCallback();
                  }else{

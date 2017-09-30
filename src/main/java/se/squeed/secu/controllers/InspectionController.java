@@ -2,6 +2,8 @@ package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Temporal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.squeed.secu.models.Inspection;
 import se.squeed.secu.models.RequestData;
@@ -63,6 +65,14 @@ public class InspectionController {
             System.out.println("...in getSingleGlucoseMeasurementByUser");
         }
         return inspection;
+    }
+
+    @RequestMapping(method=RequestMethod.DELETE, value="/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id){
+        Inspection inspection = new Inspection();
+        inspection.setId(id);
+        inspectionRepository.delete(inspection);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
