@@ -1,6 +1,4 @@
-//angular.module('controllers',[]);
 angular.module('services',[]);
-//angular.module('restServices',[]);
 angular.module('directives',[]);
 
 var app = angular.module('app', ['services','ngRoute','directives','ui.bootstrap','ngCookies','ngMaterial','angucomplete-alt']);
