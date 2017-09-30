@@ -5,16 +5,11 @@ services.factory('inspectionService',function($http, loginService, urlService, h
         createInspection : function(inspection, callbackSuccess, callbackError){
             $http.post(hostAddressService.hostAddress + 'inspections', inspection).then(function(data){
             	if (data.status == 200){
-            		if (data.data.length === 0){
-            			callbackSuccess();
-            		}else{
-            			callbackError(data.data);
-            		}
-                }
-                else{
-                    callbackError("Error when creating a new inspection");
-                }
-            });          
+            	  callbackSuccess();
+            	}else{
+            	  callbackError(data.data);
+            	}
+            });
         },
         getSingleInspection : function(id, successCallback, errorCallback){
             $http.get(hostAddressService.hostAddress + 'inspections/get/' + id).then(function(response){

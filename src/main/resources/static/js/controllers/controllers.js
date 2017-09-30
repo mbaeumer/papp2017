@@ -338,6 +338,7 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
     areaService.getAllAreas($scope.successAreaCallback, $scope.errorCallback);
 
+    // TODO: Handle session
     if (loginService.currentUserId === 0){
 		$location.path("/home");
 	}
@@ -360,19 +361,21 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     $scope.saveReport =  function(){
     	$scope.errorMessage = '';
     	$scope.statusMessage = 'Sparar informationer';
-    	var inspection = new Inspection();
+    	var inspection = {};
     	inspection.inspectionDate = new Date($scope.entity.inspectionDate);
     	inspection.travel = new Date(inspection.inspectionDate.getTime());
     	inspection.startTime = new Date(inspection.inspectionDate.getTime());
     	inspection.endTime = new Date(inspection.inspectionDate.getTime());
 
-		inspection.inspectionDate = inspection.inspectionDate.addHours(12);
-    	inspection.travel = inspection.travel.addHours(parseInt($scope.selectedTravelHour.value));
-    	inspection.travel =inspection.travel.addMinutes(parseInt($scope.selectedTravelMinute.value));
-    	inspection.startTime =inspection.startTime.addHours(parseInt($scope.selectedStartHour.value));
-    	inspection.startTime =inspection.startTime.addMinutes(parseInt($scope.selectedStartMinute.value));
-    	inspection.endTime =inspection.endTime.addHours(parseInt($scope.selectedStopHour.value));
-    	inspection.endTime =inspection.endTime.addMinutes(parseInt($scope.selectedStopMinute.value));
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setMinutes(00);
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setSeconds(00);
+    	inspection.travel = new Date(inspection.travel).setHours(parseInt($scope.selectedTravelHour.value));
+    	inspection.travel = new Date(inspection.travel).setMinutes(parseInt($scope.selectedTravelMinute.value));
+    	inspection.startTime = new Date(inspection.startTime).setHours(parseInt($scope.selectedStartHour.value));
+    	inspection.startTime = new Date(inspection.startTime).setMinutes(parseInt($scope.selectedStartMinute.value));
+    	inspection.endTime = new Date(inspection.endTime).setHours(parseInt($scope.selectedStopHour.value));
+    	inspection.endTime = new Date(inspection.endTime).setMinutes(parseInt($scope.selectedStopMinute.value));
 
     	inspection.fined = parseInt($scope.entity.fined);
     	inspection.warnings = parseInt($scope.entity.warnings);
@@ -380,13 +383,9 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
     	inspection.companyCode = entityService.currentCompanyCode;
 
-    	// set the user
-    	inspection.guard = { id: loginService.currentUserId, name: inspection.inspectionDate.toString("MM/dd/yyyy HH:mm:ss")};
-    	// set the activity type
-    	inspection.activityType = { id: 1, code: 0, description: inspection.startTime.toString("MM/dd/yyyy HH:mm:ss")};
-    	// set the category
-    	inspection.category = { id: 1, code: 0, description: inspection.endTime.toString("MM/dd/yyyy HH:mm:ss")};
-    	// set the area
+    	inspection.user = { id: cookieUtilService.getUserId()};
+    	inspection.activityType = { id: 1, code: 0}
+    	inspection.category = { id: 1, code: 0};
     	inspection.area = { id: $scope.selectedArea.originalObject.id, name: $scope.selectedArea.originalObject.name};
     	$scope.inspection = inspection;
 
@@ -394,7 +393,7 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 				|| ((parseInt($scope.selectedTravelMinute.value)) !== parseInt($scope.selectedStartMinute.value))){
 
     		$scope.separateTravelTime = true;
-			var travelInspection = new Inspection();
+			var travelInspection = {};
 
     		travelInspection.inspectionDate = new Date($scope.inspection.inspectionDate.getTime());
     		travelInspection.travel = new Date($scope.inspection.inspectionDate.getTime());
@@ -403,8 +402,8 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
     		var strDate = new Date().toString("MM/dd/yyyy");
     		travelInspection.startTime = new Date(strDate);
-    		travelInspection.startTime = travelInspection.startTime.addHours((parseInt($scope.selectedTravelHour.value)));
-    		travelInspection.startTime = travelInspection.startTime.addMinutes((parseInt($scope.selectedTravelMinute.value)));
+    		travelInspection.startTime = travelInspection.startTime.setHours((parseInt($scope.selectedTravelHour.value)));
+    		travelInspection.startTime = travelInspection.startTime.setMinutes((parseInt($scope.selectedTravelMinute.value)));
     		travelInspection.travel = new Date(travelInspection.startTime.getTime());
 
         	travelInspection.fined = 0;
@@ -413,12 +412,10 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
         	travelInspection.activityType = { id: 3, code: 2, description: 'Restid'};
         	travelInspection.companyCode = entityService.currentCompanyCode;
-        	travelInspection.guard = { id: loginService.currentUserId};
+        	travelInspection.guard = { id: cookieUtilService.getUserId()};
         	travelInspection.category = { id: 1, code: 0, description: 'inga lappar'};
 
         	$scope.travelInspection = travelInspection;
-
-        	//
 		}
     	inspectionService.createInspection(inspection, $scope.successCallback, $scope.errorCallback);
     };

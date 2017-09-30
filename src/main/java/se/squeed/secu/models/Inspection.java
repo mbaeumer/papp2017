@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class Inspection {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator = "SEQ_INSPECTION")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SEQ_INSPECTION")
 	private int id;
 	@Column(name="COMPANYCODE")
 	private int companyCode;
