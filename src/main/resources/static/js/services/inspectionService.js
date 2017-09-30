@@ -11,6 +11,15 @@ services.factory('inspectionService',function($http, loginService, urlService, h
             	}
             });
         },
+        editInspection : function(inspection, callbackSuccess, callbackError){
+            $http.put(hostAddressService.hostAddress + 'inspections', inspection).then(function(data){
+                if (data.status == 200){
+                  callbackSuccess();
+                }else{
+                  callbackError(data.data);
+                }
+            });
+        },
         getSingleInspection : function(id, successCallback, errorCallback){
             $http.get(hostAddressService.hostAddress + 'inspections/get/' + id).then(function(response){
                  if (response.status == 200){

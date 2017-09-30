@@ -45,6 +45,19 @@ public class InspectionController {
         return inspectionRepository.save(inspection);
     }
 
+    @RequestMapping(method=RequestMethod.PUT)
+    public  Inspection update(@RequestBody Inspection inspection){
+        String status = "";
+        String area = (inspection.getArea() == null) ? "Area null" : "Area ok";
+        String cat = (inspection.getCategory() == null) ? "Cat null" : "Cat ok";
+        String user = (inspection.getUser() == null) ? "User null" : "User ok";
+        String activity = (inspection.getActivityType() == null) ? "Activity null" : "Activity ok";
+        status += area + cat +  user + activity;
+        System.out.println(status);
+        inspectionRepository.save(inspection);
+        return inspection;
+    }
+
     @RequestMapping(value="my", method=RequestMethod.POST)
     public List<Inspection> getMy(@RequestBody RequestData requestData){
         List<Inspection> inspections = null;

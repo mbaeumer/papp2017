@@ -427,7 +427,7 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     $scope.isInspection = true;
 });
 
-app.controller('editInspectionController',function($scope, $http, $location, Inspection, loginService, User, entityService, inspectionService, areaService, cookieUtilService){
+app.controller('editInspectionController',function($scope, $http, $location, loginService, entityService, inspectionService, areaService, cookieUtilService){
 	$scope.title = "Redigera rapport";
     $scope.statusMessage = '';
 	$scope.entity = inspectionService.currentInspection;
@@ -532,31 +532,30 @@ app.controller('editInspectionController',function($scope, $http, $location, Ins
     	inspection.startTime = new Date(inspection.inspectionDate.getTime());
     	inspection.endTime = new Date(inspection.inspectionDate.getTime());
 
-    	inspection.inspectionDate = inspection.inspectionDate.addHours(12);
-    	inspection.travel = inspection.travel.addHours(parseInt($scope.selectedTravelHour.value));
-    	inspection.travel =inspection.travel.addMinutes(parseInt($scope.selectedTravelMinute.value));
-    	inspection.startTime =inspection.startTime.addHours(parseInt($scope.selectedStartHour.value));
-    	inspection.startTime =inspection.startTime.addMinutes(parseInt($scope.selectedStartMinute.value));
-    	inspection.endTime =inspection.endTime.addHours(parseInt($scope.selectedStopHour.value));
-    	inspection.endTime =inspection.endTime.addMinutes(parseInt($scope.selectedStopMinute.value));
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setMinutes(00);
+		inspection.inspectionDate = new Date(inspection.inspectionDate).setSeconds(00);
+    	inspection.travel = new Date(inspection.travel).setHours(parseInt($scope.selectedTravelHour.value));
+    	inspection.travel = new Date(inspection.travel).setMinutes(parseInt($scope.selectedTravelMinute.value));
+    	inspection.startTime = new Date(inspection.startTime).setHours(parseInt($scope.selectedStartHour.value));
+    	inspection.startTime = new Date(inspection.startTime).setMinutes(parseInt($scope.selectedStartMinute.value));
+    	inspection.endTime = new Date(inspection.endTime).setHours(parseInt($scope.selectedStopHour.value));
+    	inspection.endTime = new Date(inspection.endTime).setMinutes(parseInt($scope.selectedStopMinute.value));
 
     	inspection.fined = parseInt($scope.entity.fined);
     	inspection.warnings = parseInt($scope.entity.warnings);
     	inspection.obliterated = parseInt($scope.entity.obliterated);
 
-    	$scope.user = User.get({"userId" : loginService.currentUserId}, function(user, getResponseHeaders) {
-    		inspection.guard = { id: user.id, name: inspection.inspectionDate.toString("MM/dd/yyyy HH:mm:ss")};
-    		if ($scope.isStartOrStop){
-    			inspection.area = $scope.entity.area;
-    		}else{
-    			inspection.area = { id: $scope.selectedArea.originalObject.id, name: $scope.selectedArea.originalObject.name};
-    		}
-    		inspection.activityType = {id: $scope.entity.activityType.id, code: $scope.entity.activityType.code, description: inspection.startTime.toString("MM/dd/yyyy HH:mm:ss")};
-    		inspection.category = { id: 1, code: 0, description: inspection.endTime.toString("MM/dd/yyyy HH:mm:ss")};
-    		inspectionService.editInspection(inspection, $scope.successCallback, $scope.errorCallback);
-    	},function(){
-    		alert("Error retreiving user");
-    	});
+        inspection.user = { id: cookieUtilService.getUserId()};
+
+        if ($scope.isStartOrStop){
+            inspection.area = $scope.entity.area;
+        }else{
+            inspection.area = { id: $scope.selectedArea.originalObject.id, name: $scope.selectedArea.originalObject.name};
+        }
+        inspection.activityType = {id: $scope.entity.activityType.id, code: $scope.entity.activityType.code};
+        inspection.category = { id: 1, code: 0};
+        inspectionService.editInspection(inspection, $scope.successCallback, $scope.errorCallback);
     };
 
     $scope.abortReportCreation = function(){
