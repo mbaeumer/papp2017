@@ -1,5 +1,5 @@
 var controllers = angular.module('controllers');
-controllers.controller('appController',function($scope, $location, dialogService, ActivityType, entityService, loginService){
+controllers.controller('appController',function($scope, $location, loginService){
 
 	$scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();

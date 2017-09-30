@@ -1,12 +1,21 @@
-//var controllers = angular.module('controllers');
 app.controller('appController',function($scope, $location, cookieUtilService, loginService){
 
 	$scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
     };
 
+    $scope.logout = function(){
+        cookieUtilService.invalidateCookies();
+        $location.path('/home');
+    }
+
     $scope.isAdmin = function () {
-        return loginService.currentUserType !== 'vakt' && loginService.currentUserId !== 0;
+        usertype = cookieUtilService.getUserType();
+        if (usertype === undefined){
+          var isUndef = true;
+        }
+        result = cookieUtilService.getUserType() !== undefined && usertype != '1';
+        return result;
     };
 
     $scope.isAccessible = function () {
@@ -21,8 +30,6 @@ app.controller('appController',function($scope, $location, cookieUtilService, lo
         cookieUtilService.invalidateCookies();
         $location.path('/home');
     }
-
-
 });
 
 app.controller('loginController', function($scope, $location, $cookies, $cookieStore, loginService, cookieUtilService) {
@@ -47,7 +54,7 @@ app.controller('loginController', function($scope, $location, $cookies, $cookieS
     }
 });
 
-app.controller('inspectionController',function($scope, $location, Inspection, loginService, entityService, inspectionService, areaService, cookieUtilService){
+app.controller('inspectionController',function($scope, $location, loginService, entityService, inspectionService, areaService, cookieUtilService){
 
 	if (loginService.currentUserId === 0){
 		$location.path("/home");
@@ -246,7 +253,7 @@ app.controller('inspectionController',function($scope, $location, Inspection, lo
 
 });
 
-app.controller('createInspectionController',function($scope, $http, inspectionService, Inspection, loginService, User, Area, $location, entityService, areaService, cookieUtilService){
+app.controller('createInspectionController',function($scope, $http, inspectionService, loginService, $location, entityService, areaService, cookieUtilService){
     $scope.entity = { travelHour: '00', travelMinute: '00', startHour: '00', startMinute: '00', stopHour: '00', stopMinute: '00',
         fined: 0, warnings: 0, obliterated: 0, inspectionDate: new Date()};
     $scope.entity.area = '';

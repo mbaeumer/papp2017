@@ -5,6 +5,7 @@ services.factory('cookieUtilService', function($http, $cookies){
             $cookies.put('name', data.name);
             $cookies.put('usercode', data.usercode);
             $cookies.put('userid', data.id);
+            $cookies.put('usertype', data.userType.id);
             var d = new Date();
             $cookies.put('sessionExpiryDate', d.setMinutes(d.getMinutes() + 5));
         },
@@ -22,6 +23,10 @@ services.factory('cookieUtilService', function($http, $cookies){
         getUserId : function(){
             return $cookies.get('userid');
         },
+        getUserType : function(){
+            result = $cookies.get('usertype');
+            return $cookies.get('usertype');
+        },
         getUserName : function(){
             return $cookies.get('name');
         },
@@ -29,6 +34,7 @@ services.factory('cookieUtilService', function($http, $cookies){
             $cookies.put('usercode', undefined);
             $cookies.put('name', undefined);
             $cookies.put('userid', undefined);
+            $cookies.put('usertype', undefined);
             var d = new Date();
             $cookies.put('sessionExpiryDate', d.setMinutes(d.getMinutes() - 5));
         }
