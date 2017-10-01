@@ -124,24 +124,25 @@ public class Summary {
 		category = inspection.getCategory();
 		duration = Duration.between(startTime.toInstant(), endTime.toInstant()).getSeconds();
 		setDurationValue();
-
 	}
 
 	private void setDurationValue(){
-		long hours = duration % 3600;
-		long minutes = duration % 60;
+		long hours = duration / 3600;
+		long minutes = duration / 60;
 		StringBuilder sb = new StringBuilder();
 		String hourString = new Long(hours).toString();
-		if (hourString.length() == 2){
+		if (hourString.length() < 2){
 			hourString = sb.append("0").append(hourString).toString();
 		}
 		String minuteString = new Long(minutes).toString();
-		if (minuteString.length() == 2){
+		System.out.println("minute before:" + minuteString);
+		sb = new StringBuilder();
+		if (minuteString.length() < 2){
 			minuteString = sb.append("0").append(minuteString).toString();
+			System.out.println("minute after:" + minuteString);
 		}
 		sb = new StringBuilder();
 		durationValue = sb.append(hourString).append(":").append(minuteString).toString();
-		System.out.print("duration value" + durationValue);
 	}
 
 	public String getDurationValue() {
