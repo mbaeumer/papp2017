@@ -1,100 +1,95 @@
-<form ng-submit="saveReport()">    
-	<div>&nbsp;</div>
-	<div>&nbsp;</div>
+<form ng-submit="saveReport()">
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
     <h2 ng-cloak>{{title}}</h2>
-        <div class="block">
-            <label>Date: </label>
+    <div class="block">
+        <label>Date: </label>
+    </div>
+    <div class="block">
+        <md-content>
+            <md-datepicker
+                    onkeydown="return false"
+                    ng-model="entity.inspectionDate"
+                    md-placeholder="Enter date">
+            </md-datepicker>
+        </md-content>
+    </div>
+    <div class="block">
+        <label>Restid:</label>
+    </div>
+    <div class="block">
+        <select ng-model="selectedTravelHour" ng-disabled="loadedAreas === false"
+                ng-options="h.value for h in hours"></select>
+        <select ng-model="selectedTravelMinute" ng-disabled="loadedAreas === false"
+                ng-options="m.value for m in minutes"></select>
+    </div>
+    <div class="block">
+        <label>Start:</label>
+    </div>
+    <div class="block">
+        <select ng-model="selectedStartHour" ng-disabled="loadedAreas === false"
+                ng-options="h.value for h in hours"></select>
+        <select ng-model="selectedStartMinute" ng-disabled="loadedAreas === false"
+                ng-options="m.value for m in minutes"></select>
+    </div>
+    <div class="block">
+        <label>Stop:</label>
+    </div>
+    <div class="block">
+        <select ng-model="selectedStopHour" ng-disabled="loadedAreas === false"
+                ng-options="h.value for h in hours"></select>
+        <select ng-model="selectedStopMinute" ng-disabled="loadedAreas === false"
+                ng-options="m.value for m in stopMinutes"></select>
+    </div>
+    <div class="block">
+        <label>Omr&aring;de:</label>
+    </div>
+    <!-- <div ng-cloak class="block">
+        <select ng-cloak ng-model="selectedArea" ng-disabled="{{isStartOrStop}}" ng-options="ca.value for ca in composedAreas"></select>
+        <input type="button" class="btn" ng-show="loadedAreas !== true" value="H&auml;mta omr&aring;den" ng-click="reloadAreas()" />
+    </div>
+     -->
+    <div ng-cloak class="block" ng-disabled="{{isStartOrStop}}">
+        <angucomplete-alt id="ex6" placeholder="Kod/Adress" pause="300" selected-object="selectedArea"
+                          local-data="areas" search-fields="code,name" id="id" title-field="code,name" minlength="1"
+                          input-class="form-control form-control-small" match-class="highlight"/>
+    </div>
+    <div ng-cloak class="block" ng-show="loadedAreas !== true">
+        <input type="button" class="btn" ng-show="loadedAreas !== true" value="H&auml;mta omr&aring;den"
+               ng-click="reloadAreas()"/>
+    </div>
+    <div ng-cloak class="block">
+        Utvald omr&aring;de: {{!isStartOrStop ? selectedArea.originalObject.name : '-'}} {{!isStartOrStop ?
+        selectedArea.originalObject.code : ''}}
+    </div>
+    <div class="block">
+        <label>K:</label>
+    </div>
+    <div class="block">
+        <input type="number" ng-disabled="{{!isInspection}}" ng-model="entity.fined"/>
+    </div>
+    <div class="block">
+        <label>V:</label>
+    </div>
+    <div class="block">
+        <input type="number" ng-disabled="{{!isInspection}}" ng-model="entity.warnings"/>
+    </div>
+    <div class="block">
+        <label>M:</label>
+    </div>
+    <div class="block">
+        <input type="number" ng-disabled="{{!isInspection}}" ng-model="entity.obliterated"/>
+    </div>
+    <input type="button" class="btn" value="Avbryt" ng-click="abortReportCreation()"/>
+    <input type="submit" class="btn btn-primary"
+           ng-disabled="loadedAreas === false || selectedArea.originalObject==='' || selectedArea.originalObject===undefined || statusMessage !== ''"
+           value="Spara"/>
+    <div class="error" ng-show="errorMessage !==''">
+        <div ng-repeat="error in errorMessage">
+            <div>{{error}}</div>
         </div>
-        <div class="block">
-            <md-content>
-                <md-datepicker
-                        onkeydown="return false"
-                        ng-model="entity.inspectionDate"
-                        md-placeholder="Enter date">
-                </md-datepicker>
-            </md-content>
-        </div>
-<!--
-        <div class="block">
-            <input
-                  disabled
-                  type="text"
-                  datepicker-popup="{{from.format}}"
-                  ng-model="entity.inspectionDate"
-                  is-open="from.opened"
-                  min="from.minDate" max="from.maxDate"
-                  datepicker-options="from.dateOptions"
-                  date-disabled="from.disabled(date, mode)"
-                  ng-required="true"
-                  close-text="{{ from.closeText }}"
-                  ng-change="update();" />
-                  <button class="btn btn-default" ng-click="from.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-        </div>
--->
-        <div class="block">
-        	<label>Restid:</label>
-    	</div>
-        <div class="block">            
-            <select ng-model="selectedTravelHour" ng-disabled="loadedAreas === false" ng-options="h.value for h in hours"></select>
-            <select ng-model="selectedTravelMinute" ng-disabled="loadedAreas === false" ng-options="m.value for m in minutes"></select>
-        </div>
-        <div class="block">
-        	<label>Start:</label>
-    	</div>
-        <div class="block">
-            <select ng-model="selectedStartHour" ng-disabled="loadedAreas === false" ng-options="h.value for h in hours"></select>
-            <select ng-model="selectedStartMinute" ng-disabled="loadedAreas === false" ng-options="m.value for m in minutes"></select>
-        </div>
-        <div class="block">
-        	<label>Stop:</label>
-    	</div>
-        <div class="block">            
-            <select ng-model="selectedStopHour" ng-disabled="loadedAreas === false" ng-options="h.value for h in hours"></select>
-            <select ng-model="selectedStopMinute" ng-disabled="loadedAreas === false" ng-options="m.value for m in stopMinutes"></select>
-        </div>
-        <div class="block">
-        	<label>Omr&aring;de:</label>
-    	</div>
-        <!-- <div ng-cloak class="block">    
-            <select ng-cloak ng-model="selectedArea" ng-disabled="{{isStartOrStop}}" ng-options="ca.value for ca in composedAreas"></select>
-			<input type="button" class="btn" ng-show="loadedAreas !== true" value="H&auml;mta omr&aring;den" ng-click="reloadAreas()" />			
-        </div>        
-         -->         
-        <div ng-cloak class="block" ng-disabled="{{isStartOrStop}}">       	
-        	<angucomplete-alt id="ex6" placeholder="Kod/Adress" pause="300" selected-object="selectedArea" local-data="areas" search-fields="code,name" id="id" title-field="code,name" minlength="1" input-class="form-control form-control-small" match-class="highlight" />  
-        </div>
-        <div ng-cloak class="block" ng-show="loadedAreas !== true">    
-			<input type="button" class="btn" ng-show="loadedAreas !== true" value="H&auml;mta omr&aring;den" ng-click="reloadAreas()" />			
-        </div>
-        <div ng-cloak class="block">       	
-        	Utvald omr&aring;de: {{!isStartOrStop ? selectedArea.originalObject.name : '-'}} {{!isStartOrStop ? selectedArea.originalObject.code : ''}}
-        </div>
-        <div class="block">
-        	<label>K:</label>
-    	</div>
-        <div class="block">            
-            <input type="number" ng-disabled="{{!isInspection}}" ng-model="entity.fined" />
-        </div>
-        <div class="block">
-        	<label>V:</label>
-    	</div>
-        <div class="block">            
-            <input type="number" ng-disabled="{{!isInspection}}" ng-model="entity.warnings" />
-        </div>
-        <div class="block">
-        	<label>M:</label>
-    	</div>
-        <div class="block">            
-            <input type="number" ng-disabled="{{!isInspection}}" ng-model="entity.obliterated" />
-        </div>
-        <input type="button" class="btn" value="Avbryt" ng-click="abortReportCreation()" />
-        <input type="submit" class="btn btn-primary" ng-disabled="loadedAreas === false || selectedArea.originalObject==='' || selectedArea.originalObject===undefined || statusMessage !== ''" value="Spara" />
-        <div class="error" ng-show="errorMessage !==''">
-        	<div ng-repeat="error in errorMessage">
-        		<div>{{error}}</div>
-        	</div>
-    	</div>
-    	<div class="status" ng-show="statusMessage !==''">
-        	<div>{{statusMessage}}</div>        	
-    	</div>
+    </div>
+    <div class="status" ng-show="statusMessage !==''">
+        <div>{{statusMessage}}</div>
+    </div>
 </form>

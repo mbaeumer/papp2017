@@ -256,7 +256,7 @@ app.controller('inspectionController',function($scope, $location, loginService, 
 
 });
 
-app.controller('createInspectionController',function($scope, $http, inspectionService, loginService, $location, entityService, areaService, cookieUtilService){
+app.controller('createInspectionController',function($scope, $http, inspectionService, loginService, $location, entityService, areaService, cookieUtilService, dateTimeService){
     $scope.entity = { travelHour: '00', travelMinute: '00', startHour: '00', startMinute: '00', stopHour: '00', stopMinute: '00',
         fined: 0, warnings: 0, obliterated: 0, inspectionDate: new Date()};
     $scope.entity.area = '';
@@ -289,23 +289,9 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
         $scope.errorMessage = message;
     };
 
-    $scope.hours = [{id: 0, value: '00'},{id: 1,value: '01'},{id: 2,value: '02'},
-                    {id: 3, value: '03'},{id: 4, value: '04'},{id: 5, value: '05'},{id: 6, value: '06'},
-                    {id: 7, value: '07'},{id: 8, value: '08'},{id: 9, value: '09'},{id: 10, value: '10'},
-                    {id: 11, value: '11'},{id: 12, value: '12'},{id: 13, value: '13'},{id: 14, value: '14'},
-                    {id: 15, value: '15'},{id: 16, value: '16'},{id: 17, value: '17'},{id: 18, value: '18'},
-                    {id: 19, value: '19'},{id: 20, value: '20'},{id: 21, value: '21'},{id: 22, value: '22'},
-                    {id: 23, value: '23'}];
-
-    $scope.minutes = [{value: '00'},{value: '05'},{value: '10'},
-                    {value: '15'},{value: '20'},{value: '25'},{value: '30'},
-                    {value: '35'},{value: '40'},{value: '45'},{value: '50'},
-                    {value: '55'}];
-
-    $scope.stopMinutes = [{value: '00'},{value: '05'},{value: '10'},
-                      {value: '15'},{value: '20'},{value: '25'},{value: '30'},
-                      {value: '35'},{value: '40'},{value: '45'},{value: '50'},
-                      {value: '55'},{value: '59'}];
+    $scope.hours = dateTimeService.getHours();
+    $scope.minutes = dateTimeService.getMinutes();
+    $scope.stopMinutes = dateTimeService.getStopMinutes();
 
     $scope.updateSuccessCallback = function(data){
     	if (data !== undefined && data !==""){

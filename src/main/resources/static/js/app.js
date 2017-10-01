@@ -1,7 +1,8 @@
+angular.module('controllers',[]);
 angular.module('services',[]);
 angular.module('directives',[]);
 
-var app = angular.module('app', ['services','ngRoute','directives','ui.bootstrap','ngCookies','ngMaterial','angucomplete-alt']);
+var app = angular.module('app', ['controllers','services','ngRoute','directives','ui.bootstrap','ngCookies','ngMaterial','angucomplete-alt']);
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
 
@@ -11,13 +12,14 @@ var app = angular.module('app', ['services','ngRoute','directives','ui.bootstrap
            when('/createInspection', {templateUrl: '/partials/createInspection.html', controller: 'createInspectionController'}).
            when('/editInspection', {templateUrl: '/partials/createInspection.html', controller: 'editInspectionController'}).
            when('/summary', {templateUrl: '/partials/summary.html', controller: 'summaryController'}).
+           when('/createSummary', {templateUrl: 'partials/createSummary.html', controller: 'createSummaryController'}).
         /*
             //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
            //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
 
 
             when('/summary', {templateUrl: 'partials/summary.html', controller: 'summaryController'}).
-            when('/createSummary', {templateUrl: 'partials/createSummary.html', controller: 'createSummaryController'}).
+
             when('/editSummary', {templateUrl: 'partials/createSummary.html', controller: 'editSummaryController'}).            
             when('/areas', {templateUrl: 'partials/areas.html', controller: 'areaController'}).
             when('/createArea', {templateUrl: 'partials/createArea.html', controller: 'createAreaController'}).
