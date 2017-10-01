@@ -14,6 +14,7 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
            when('/summary', {templateUrl: '/partials/summary.html', controller: 'summaryController'}).
            when('/createSummary', {templateUrl: '/partials/createSummary.html', controller: 'createSummaryController'}).
            when('/editSummary', {templateUrl: 'partials/createSummary.html', controller: 'editSummaryController'}).
+           when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
         /*
             //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
            //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).

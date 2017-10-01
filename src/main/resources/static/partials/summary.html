@@ -18,23 +18,6 @@
 		<li><a href ng-click="setDateFilter('past_week')">f&ouml;rra vecka</a></li>
 		<li><a href ng-click="setDateFilter('this_month')">denna m&aring;nad</a></li>
 		<li><a href ng-click="setDateFilter('past_month')">f&ouml;rra m&aring;nad</a></li>
-		<!--
-        <li>
-			<input
-                  disabled
-                  type="text"
-                  datepicker-popup="{{from.format}}"
-                  ng-model="customDate"
-                  is-open="from.opened"
-                  min="from.minDate" max="from.maxDate"
-                  datepicker-options="from.dateOptions"
-                  date-disabled="from.disabled(date, mode)"
-                  ng-required="true"
-                  close-text="{{ from.closeText }}"
-                  ng-change="updateCustomDateFilter();" />
-                  <button class="btn btn-default" ng-click="from.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-		</li>
-		-->
     </ul>
     <em ng-show="reports.length == 0">Inga rapporter registrerade.</em>
     <table ng-hide="reports.length == 0"
@@ -62,7 +45,6 @@
             <td>{{report.endTime | date: 'HH:mm'}}</td>
             <td>{{report.fined}}</td>
             <td>{{report.activityType.code}}</td>
-            <td>{{report.activityType.description}}</td>
             <td>{{report.category.code}}</td>
             <td>{{report.durationValue}}</td>
             <td><a class="btn-link" ng-click="editSummary(report.id)">Redigera <i class="glyphicon glyphicon-pencil"></i></a></td>
