@@ -12,15 +12,13 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
            when('/createInspection', {templateUrl: '/partials/createInspection.html', controller: 'createInspectionController'}).
            when('/editInspection', {templateUrl: '/partials/createInspection.html', controller: 'editInspectionController'}).
            when('/summary', {templateUrl: '/partials/summary.html', controller: 'summaryController'}).
-           when('/createSummary', {templateUrl: 'partials/createSummary.html', controller: 'createSummaryController'}).
+           when('/createSummary', {templateUrl: '/partials/createSummary.html', controller: 'createSummaryController'}).
+           when('/editSummary', {templateUrl: 'partials/createSummary.html', controller: 'editSummaryController'}).
         /*
             //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
            //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
 
 
-            when('/summary', {templateUrl: 'partials/summary.html', controller: 'summaryController'}).
-
-            when('/editSummary', {templateUrl: 'partials/createSummary.html', controller: 'editSummaryController'}).            
             when('/areas', {templateUrl: 'partials/areas.html', controller: 'areaController'}).
             when('/createArea', {templateUrl: 'partials/createArea.html', controller: 'createAreaController'}).
             when('/editArea', {templateUrl: 'partials/createArea.html', controller: 'editAreaController'}).

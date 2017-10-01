@@ -142,16 +142,17 @@ controllers.controller('createSummaryController',function($scope, $http, $locati
             $scope.separateTravelTime = true;
             var travelInspection = {};
 
-            travelInspection.inspectionDate = new Date($scope.inspection.inspectionDate.getTime());
-            travelInspection.travel = new Date($scope.inspection.inspectionDate.getTime());
-            travelInspection.startTime = new Date($scope.inspection.inspectionDate.getTime());
-            travelInspection.endTime = new Date($scope.inspection.startTime.getTime());
+            travelInspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
+            travelInspection.inspectionDate = new Date(inspection.inspectionDate).setMinutes(00);
+            travelInspection.inspectionDate = new Date(inspection.inspectionDate).setSeconds(00);
 
-            var strDate = new Date().toString("MM/dd/yyyy");
-            travelInspection.startTime = new Date(strDate);
-            travelInspection.startTime = travelInspection.startTime.setHours((parseInt($scope.selectedTravelHour.value)));
-            travelInspection.startTime = travelInspection.startTime.setMinutes((parseInt($scope.selectedTravelMinute.value)));
-            travelInspection.travel = new Date(travelInspection.startTime.getTime());
+            travelInspection.travel = new Date(inspection.inspectionDate);
+            travelInspection.startTime = new Date(inspection.travel);
+            travelInspection.endTime = new Date(inspection.startTime);
+
+            travelInspection.startTime = new Date(travelInspection.startTime).setHours((parseInt($scope.selectedTravelHour.value)));
+            travelInspection.startTime = new Date(travelInspection.startTime).setMinutes((parseInt($scope.selectedTravelMinute.value)));
+            travelInspection.travel = new Date(travelInspection.startTime);
 
             travelInspection.fined = 0;
             travelInspection.warnings = 0;
@@ -159,7 +160,7 @@ controllers.controller('createSummaryController',function($scope, $http, $locati
 
             travelInspection.activityType = { id: 3, code: 2, description: 'Restid'};
             travelInspection.companyCode = entityService.currentCompanyCode;
-            travelInspection.guard = { id: $scope.selectedUser.id};
+            travelInspection.user = { id: $scope.selectedUser.id};
             travelInspection.category = { id: 1, code: 0, description: 'inga lappar'};
             $scope.travelInspection = travelInspection;
         }

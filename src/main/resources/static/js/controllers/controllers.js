@@ -271,7 +271,6 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     	}else{
     		$scope.successCreateTravelCallback();
     	}
-
     };
 
     $scope.successTravelAreaCallback = function(data){
@@ -391,16 +390,17 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     		$scope.separateTravelTime = true;
 			var travelInspection = {};
 
-    		travelInspection.inspectionDate = new Date($scope.inspection.inspectionDate.getTime());
-    		travelInspection.travel = new Date($scope.inspection.inspectionDate.getTime());
-    		travelInspection.startTime = new Date($scope.inspection.inspectionDate.getTime());
-    		travelInspection.endTime = new Date($scope.inspection.startTime.getTime());
+			travelInspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
+            travelInspection.inspectionDate = new Date(inspection.inspectionDate).setMinutes(00);
+            travelInspection.inspectionDate = new Date(inspection.inspectionDate).setSeconds(00);
 
-    		var strDate = new Date().toString("MM/dd/yyyy");
-    		travelInspection.startTime = new Date(strDate);
-    		travelInspection.startTime = travelInspection.startTime.setHours((parseInt($scope.selectedTravelHour.value)));
-    		travelInspection.startTime = travelInspection.startTime.setMinutes((parseInt($scope.selectedTravelMinute.value)));
-    		travelInspection.travel = new Date(travelInspection.startTime.getTime());
+    		travelInspection.travel = new Date(inspection.inspectionDate);
+    		travelInspection.startTime = new Date(inspection.travel);
+    		travelInspection.endTime = new Date(inspection.startTime);
+
+    		travelInspection.startTime = new Date(travelInspection.startTime).setHours((parseInt($scope.selectedTravelHour.value)));
+    		travelInspection.startTime = new Date(travelInspection.startTime).setMinutes((parseInt($scope.selectedTravelMinute.value)));
+    		travelInspection.travel = new Date(travelInspection.startTime);
 
         	travelInspection.fined = 0;
         	travelInspection.warnings = 0;
@@ -408,7 +408,7 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
         	travelInspection.activityType = { id: 3, code: 2, description: 'Restid'};
         	travelInspection.companyCode = entityService.currentCompanyCode;
-        	travelInspection.guard = { id: cookieUtilService.getUserId()};
+        	travelInspection.user = { id: cookieUtilService.getUserId()};
         	travelInspection.category = { id: 1, code: 0, description: 'inga lappar'};
 
         	$scope.travelInspection = travelInspection;
@@ -564,7 +564,7 @@ app.controller('editInspectionController',function($scope, $http, $location, log
 
 });
 
-app.controller('summaryController',function($scope, $location, summaryService, entityService, fileService, cookieUtilService, metaSummaryService, filterService){
+app.controller('summaryController',function($scope, $location, summaryService, entityService, fileService, cookieUtilService, metaSummaryService, inspectionService, filterService){
 
     //TODO: Handle session
 	if (cookieUtilService.getUserId() === 0){
@@ -594,8 +594,17 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 	fileService.endDate = summaryParam.toDate;
 
     $scope.editSummary = function (id) {
-        // TODO: Complete
+        inspectionService.getSingleInspection(id, $scope.successReadSingleSummaryCallback, $scope.errorReadSingleSummaryCallback);
     };
+
+    $scope.successReadSingleSummaryCallback = function(data){
+        entityService.inspectionToEdit = data;
+        $location.path("/editSummary");
+    }
+
+    $scope.errorReadSingleSummaryCallback = function(){
+
+    }
 
     $scope.dateFilter = function (report) {
     	if ($scope.startDate!="" && $scope.endDate!=""){
