@@ -6,11 +6,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.squeed.secu.models.Inspection;
+import se.squeed.secu.models.SummaryParam;
 import se.squeed.secu.repositories.InspectionRepository;
 
 import java.io.File;
@@ -101,10 +99,28 @@ public class FileController {
     @RequestMapping(value = "/download", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public
     @ResponseBody
-    HttpEntity<byte[]> downloadB() throws IOException {
-        File file = generateFile();
-        byte[] document = FileCopyUtils.copyToByteArray(file);
+    HttpEntity<byte[]> downloadB(@RequestParam String from, @RequestParam String to) throws IOException {
+        System.out.println(from);
+        System.out.println(to);
 
+        //Mon Jun 18 00:00:00 IST 2012
+        //Sun Oct 01 2017 18:00:00 GMT 0200 (CEST)
+
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss z");
+        String dateInString = from;
+        Date fromDate = null;
+        Date toDate = null;
+
+        try {
+            fromDate = formatter.parse(from);
+            toDate = formatter.parse(to);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        File file = generateFile(fromDate, toDate);
+        byte[] document = FileCopyUtils.copyToByteArray(file);
         HttpHeaders header = new HttpHeaders();
         header.setContentType(new MediaType("application", "octet-stream"));
         header.set("Content-Disposition", "inline; filename=" + file.getName());
@@ -113,14 +129,30 @@ public class FileController {
         return new HttpEntity<byte[]>(document, header);
     }
 
+    /*
+    @RequestMapping(value = "/download", method = RequestMethod.POST, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public
+    @ResponseBody
+    HttpEntity<byte[]> downloadB(@RequestBody SummaryParam summaryParam) throws IOException {
+        File file = generateFile(summaryParam);
+        byte[] document = FileCopyUtils.copyToByteArray(file);
+        if (summaryParam == null){
+            System.out.println("summaryParam null");
+        }
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(new MediaType("application", "octet-stream"));
+        header.set("Content-Disposition", "inline; filename=" + file.getName());
+        header.setContentLength(document.length);
 
-    private File generateFile() {
+        return new HttpEntity<byte[]>(document, header);
+    }
+    */
+
+
+    private File generateFile(Date start, Date end) {
         FileOutputStream fop = null;
         File file = null;
         String content = "";
-
-        Date start = new Date();
-        Date end = new Date();
 
         try {
             Date d = new Date();
@@ -139,10 +171,13 @@ public class FileController {
             //get the summaries
             List<Inspection> inspections = new ArrayList<>();
             if (start != null && end != null) {
+                System.out.println("From: " + start);
+                System.out.println("To: " + end);
                 inspections = repository.findAllByInspectionDateBetweenOrderByUserAscInspectionDateDescStartTimeAsc(start, end);
             } else {
                 inspections = repository.findAll();
             }
+            System.out.println("Retrieved: " + inspections.size());
 
             for (Inspection inspection : inspections) {
                 content = getFormattedContent(inspection);

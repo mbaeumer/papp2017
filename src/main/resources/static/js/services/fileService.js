@@ -4,12 +4,9 @@ services.factory('fileService',function($http, urlService){
         startDate: "",
         endDate: "",
         getFile : function(callbackSuccess, callbackError){
-        	var start = this.startDate;//.toString("MM/dd/yyyy");
-        	var end = this.endDate;//.toString("MM/dd/yyyy");
+            start = this.startDate.toString("MM/dd/yyyy");
         	var url = urlService.baseRESTURL + 'files/download';
-        	if (start !== ""){
-        		url += '?from=' + start + '&to=' + end;
-        	}
+        	url += '?from=' + this.startDate + '&to=' + this.endDate;
             $http.get(url).then(function(data){
                 if (data.status == 200){        	
                     callbackSuccess(data, url);

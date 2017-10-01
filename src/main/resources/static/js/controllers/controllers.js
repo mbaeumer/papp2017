@@ -580,19 +580,6 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 
     }
 
-    /*$scope.summaryParam = {}
-    $scope.summaryParam.fromDate = new Date();
-    $scope.summaryParam.fromDate.setHours(18);
-    $scope.summaryParam.fromDate.setMinutes(00);
-    $scope.summaryParam.fromDate.setSeconds(00);
-    $scope.summaryParam.toDate = new Date();
-    $scope.summaryParam.toDate.setDate($scope.summaryParam.fromDate.getDate());
-    $scope.summaryParam.toDate.setHours(23);
-    $scope.summaryParam.toDate.setMinutes(59);
-    $scope.summaryParam.toDate.setSeconds(59);
-    */
-
-
     $scope.editSummary = function (id) {
         inspectionService.getSingleInspection(id, $scope.successReadSingleSummaryCallback, $scope.errorReadSingleSummaryCallback);
     };
@@ -605,13 +592,6 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     $scope.errorReadSingleSummaryCallback = function(){
 
     }
-
-    $scope.dateFilter = function (report) {
-    	if ($scope.startDate!="" && $scope.endDate!=""){
-    		return (report.inspectionDate >= $scope.startDate && report.inspectionDate < $scope.endDate);
-    	}
-    	return true;
-    };
 
     $scope.updateCustomDateFilter = function(){
     	var date = new Date($scope.customDate);
@@ -649,7 +629,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
             $scope.summaryParam.fromDate.setSeconds(00);
             $scope.summaryParam.toDate = new Date();
             $scope.summaryParam.toDate.setDate($scope.summaryParam.fromDate.getDate());
-            $scope.summaryParam.toDate.setHours(23);
+            $scope.summaryParam.toDate.setHours(21);
             $scope.summaryParam.toDate.setMinutes(59);
             $scope.summaryParam.toDate.setSeconds(59);
             summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
@@ -657,7 +637,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     	}else if (period === 'yesterday'){
     	    $scope.summaryParam.toDate = new Date();
     	    $scope.summaryParam.toDate.setDate($scope.summaryParam.toDate.getDate() - 1);
-    	    $scope.summaryParam.toDate.setHours(23);
+    	    $scope.summaryParam.toDate.setHours(21);
             $scope.summaryParam.toDate.setMinutes(59);
             $scope.summaryParam.toDate.setSeconds(59);
             $scope.summaryParam.fromDate = new Date($scope.summaryParam.toDate);
