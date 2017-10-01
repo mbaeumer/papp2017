@@ -1,17 +1,13 @@
 package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.squeed.secu.models.Inspection;
-import se.squeed.secu.models.RequestData;
-import se.squeed.secu.models.User;
+import se.squeed.secu.models.*;
 import se.squeed.secu.repositories.InspectionRepository;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TemporalType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,5 +96,15 @@ public class InspectionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @RequestMapping(value="summary", method= RequestMethod.POST)
+    public List<Summary> getSummaryBetweenDates(@RequestBody SummaryParam summaryParam)  {
+        List<Inspection> inspections = inspectionRepository.findAllByInspectionDateBetweenOrderByUserAscInspectionDateDescStartTimeAsc(summaryParam.getFromDate(), summaryParam.getToDate());
+        List<Summary> summaries = new ArrayList<>();
+        for (Inspection inspection : inspections){
+            Summary summary = new Summary();
+            summary.setInspection(inspection);
+            summaries.add(summary);
+        }
+        return summaries;
+    }
 }

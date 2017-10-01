@@ -10,6 +10,7 @@ var app = angular.module('app', ['services','ngRoute','directives','ui.bootstrap
            when('/inspections', {templateUrl: '/partials/inspections.html', controller: 'inspectionController'}).
            when('/createInspection', {templateUrl: '/partials/createInspection.html', controller: 'createInspectionController'}).
            when('/editInspection', {templateUrl: '/partials/createInspection.html', controller: 'editInspectionController'}).
+           when('/summary', {templateUrl: '/partials/summary.html', controller: 'summaryController'}).
         /*
             //when('/file', {templateUrl: 'partials/summary.html', controller: 'fileController'}).
            //when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).

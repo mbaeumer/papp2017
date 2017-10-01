@@ -18,7 +18,8 @@
 		<li><a href ng-click="setDateFilter('past_week')">f&ouml;rra vecka</a></li>
 		<li><a href ng-click="setDateFilter('this_month')">denna m&aring;nad</a></li>
 		<li><a href ng-click="setDateFilter('past_month')">f&ouml;rra m&aring;nad</a></li>
-		<li>
+		<!--
+        <li>
 			<input
                   disabled
                   type="text"
@@ -33,7 +34,9 @@
                   ng-change="updateCustomDateFilter();" />
                   <button class="btn btn-default" ng-click="from.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 		</li>
+		-->
     </ul>
+    {{reports.length}}
     <em ng-show="reports.length == 0">Inga rapporter registrerade.</em>
     <table ng-hide="reports.length == 0"
            class="table table-striped override-bootstrap">
@@ -52,7 +55,7 @@
         </tr>
         </thead>
         <!-- The table is built using the AngularJS repeat function, iterating over the topics variable, and ordering by the property specified in the orderBy variable -->
-        <tr ng-repeat="report in reports | filter: dateFilter">
+        <tr ng-repeat="report in reports">
             <td>{{report.inspectionDate | date: 'yyyy-MM-dd'}}</td>
             <td>{{report.user.name}} ({{report.user.userCode}})</td>
             <td>{{report.area.code !==0 ? report.area.code : report.activityType.description}}</td>
@@ -61,7 +64,9 @@
             <td>{{report.endTime | date: 'HH:mm'}}</td>
             <td>{{report.fined}}</td>
             <td>{{report.activityType.code}}</td>
+            <td>{{report.activityType.description}}</td>
             <td>{{report.category.code}}</td>
+            <td>{{report.category.description}}</td>
             <td>{{report.duration.value}}</td>
             <td><a class="btn-link" ng-click="editSummary(report.id)">Redigera <i class="glyphicon glyphicon-pencil"></i></a></td>
             <td><a class="btn-link" ng-click="deleteSummary(report.id)">Ta bort <i class="glyphicon glyphicon-remove"></i></a></td>

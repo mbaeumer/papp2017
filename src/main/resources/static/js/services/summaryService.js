@@ -1,8 +1,18 @@
 var services = angular.module('services');
-services.factory('summaryService',function($http, urlService){
-    return {        
+services.factory('summaryService',function($http, hostAddressService){
+    return {
+        getSummaries : function(summaryParam, callbackSuccess, callbackError){
+            $http.post(hostAddressService.hostAddress + 'inspections/summary', summaryParam).then(function(data){
+                if (data.status == 200){
+                    callbackSuccess(data.data);
+                }
+                else{
+                    callbackError("Error when retrieving the summaries");
+                }
+            });
+        },
         createInspection : function(inspection, callbackSuccess, callbackError){
-            $http.post(urlService.baseRESTURL + urlService.inspectionURL, inspection).then(function(data){
+            $http.post(hostAddressService.hostAddress + 'inspections', inspection).then(function(data){
             	if (data.status == 200){                	
                     callbackSuccess();
                 }
