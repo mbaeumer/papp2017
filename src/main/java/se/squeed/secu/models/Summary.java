@@ -141,6 +141,7 @@ public class Summary {
 		}
 		sb = new StringBuilder();
 		durationValue = sb.append(hourString).append(":").append(minuteString).toString();
+		System.out.print("duration value" + durationValue);
 	}
 
 	public String getDurationValue() {
