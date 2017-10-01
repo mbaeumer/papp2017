@@ -580,18 +580,18 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 
     }
 
-    summaryParam = {}
-    summaryParam.fromDate = new Date();
-    summaryParam.fromDate.setHours(18);
-    summaryParam.fromDate.setMinutes(00);
-    summaryParam.fromDate.setSeconds(00);
-    summaryParam.toDate = new Date();
-    summaryParam.toDate.setDate(summaryParam.fromDate.getDate() + 1);
+    /*$scope.summaryParam = {}
+    $scope.summaryParam.fromDate = new Date();
+    $scope.summaryParam.fromDate.setHours(18);
+    $scope.summaryParam.fromDate.setMinutes(00);
+    $scope.summaryParam.fromDate.setSeconds(00);
+    $scope.summaryParam.toDate = new Date();
+    $scope.summaryParam.toDate.setDate($scope.summaryParam.fromDate.getDate());
+    $scope.summaryParam.toDate.setHours(23);
+    $scope.summaryParam.toDate.setMinutes(59);
+    $scope.summaryParam.toDate.setSeconds(59);
+    */
 
-    summaryService.getSummaries(summaryParam, $scope.successCallback, $scope.errorCallback);
-
-	fileService.startDate = summaryParam.fromDate;
-	fileService.endDate = summaryParam.toDate;
 
     $scope.editSummary = function (id) {
         inspectionService.getSingleInspection(id, $scope.successReadSingleSummaryCallback, $scope.errorReadSingleSummaryCallback);
@@ -640,17 +640,34 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     	var dateString = new Date().toString("MM/dd/yyyy");
     	var startDate = new Date(dateString);
     	var endDate = new Date();
-
+        $scope.summaryParam = {};
 
     	if (period === 'today'){
-    		$scope.startDate = new Date(startDate.getTime());
-    		endDate = new Date(startDate.getTime());
-    		$scope.endDate = new Date(endDate.addDays(1));
+    	    $scope.summaryParam.fromDate = new Date();
+    	    $scope.summaryParam.fromDate.setHours(18);
+            $scope.summaryParam.fromDate.setMinutes(00);
+            $scope.summaryParam.fromDate.setSeconds(00);
+            $scope.summaryParam.toDate = new Date();
+            $scope.summaryParam.toDate.setDate($scope.summaryParam.fromDate.getDate());
+            $scope.summaryParam.toDate.setHours(23);
+            $scope.summaryParam.toDate.setMinutes(59);
+            $scope.summaryParam.toDate.setSeconds(59);
+            summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+
     	}else if (period === 'yesterday'){
-    		startDate = startDate.addDays(-1);
-    		$scope.startDate = new Date(startDate.getTime());
-    		$scope.endDate = new Date(new Date(startDate.getTime()).addDays(1));
-    	}else if (period === 'past_week'){
+    	    $scope.summaryParam.toDate = new Date();
+    	    $scope.summaryParam.toDate.setDate($scope.summaryParam.toDate.getDate() - 1);
+    	    $scope.summaryParam.toDate.setHours(23);
+            $scope.summaryParam.toDate.setMinutes(59);
+            $scope.summaryParam.toDate.setSeconds(59);
+            $scope.summaryParam.fromDate = new Date($scope.summaryParam.toDate);
+            $scope.summaryParam.fromDate.setHours(00);
+            $scope.summaryParam.fromDate.setMinutes(00);
+            $scope.summaryParam.fromDate.setSeconds(00)
+            summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+    	}
+    	/*
+    	else if (period === 'past_week'){
     		var d = new Date(dateString);
     		var day = new Date(d.getDay());
     		var diff = new Date(d.getDate() - day + (day == 0 ? -6:1));
@@ -684,17 +701,12 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     		$scope.startDate = "";
     		$scope.endDate = "";
     	}
+    	*/
 
-    	fileService.startDate = $scope.startDate.toString("MM/dd/yyyy");
-    	fileService.endDate = $scope.endDate.toString("MM/dd/yyyy");
-    	filterService.startDate = $scope.startDate.toString("MM/dd/yyyy");
-    	filterService.endDate = $scope.endDate.toString("MM/dd/yyyy");
-
-    	if (period === 'today'){
-    		$scope.endDate = new Date(endDate.addDays(1)).addMinutes(-1);
-    	}else if (period === 'yesterday'){
-    		$scope.endDate = new Date(new Date(startDate.getTime()).addDays(1)).addMinutes(-1);
-    	}
+    	fileService.startDate = $scope.summaryParam.fromDate;
+    	fileService.endDate = $scope.summaryParam.toDate;
+    	filterService.startDate = $scope.summaryParam.fromDate;
+    	filterService.endDate = $scope.summaryParam.toDate;
 
     	//$scope.metaSummary = metaSummaryService.getMetaSummary($scope.successMetaSummaryCallback, $scope.errorMetaSummaryCallback);
     };
@@ -708,6 +720,13 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     $scope.errorMetaSummaryCallback = function(message){
 
     };
+
+    $scope.setDateFilter('today');
+    summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+
+    fileService.startDate = $scope.summaryParam.fromDate;
+    fileService.endDate = $scope.summaryParam.toDate;
+
 
     //$scope.metaSummary = metaSummaryService.getMetaSummary($scope.successMetaSummaryCallback, $scope.errorMetaSummaryCallback);
 });

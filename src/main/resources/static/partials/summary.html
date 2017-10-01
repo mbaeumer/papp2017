@@ -11,14 +11,11 @@
         <i class="glyphicon glyphicon-download-alt"></i>
     </a>
     <ul class="inline">
-    	<li><a href ng-click="setDateFilter('all')">alla</a></li>
 		<li><a href ng-click="setDateFilter('today')">idag</a></li>
 		<li><a href ng-click="setDateFilter('yesterday')">ig&aring;r</a></li>		
-		<li><a href ng-click="setDateFilter('this_week')">denna vecka</a></li>
-		<li><a href ng-click="setDateFilter('past_week')">f&ouml;rra vecka</a></li>
-		<li><a href ng-click="setDateFilter('this_month')">denna m&aring;nad</a></li>
-		<li><a href ng-click="setDateFilter('past_month')">f&ouml;rra m&aring;nad</a></li>
     </ul>
+    {{summaryParam.fromDate | date: 'yyyy-MM-dd HH:mm'}}
+    {{summaryParam.toDate | date: 'yyyy-MM-dd HH:mm'}}
     <em ng-show="reports.length == 0">Inga rapporter registrerade.</em>
     <table ng-hide="reports.length == 0"
            class="table table-striped override-bootstrap">
