@@ -21,14 +21,23 @@ public class AreaController {
     private AreaRepository areaRepository;
 
     @Autowired
-    public AreaController(AreaRepository inspectionRepository){
-        this.areaRepository = inspectionRepository;
+    public AreaController(AreaRepository areaRepository){
+        this.areaRepository = areaRepository;
     }
 
     @RequestMapping(method= RequestMethod.GET)
-    public List<Area> getAreas(Model model) {
-        List<Area> users = areaRepository.findAll();
-        return users;
+    public List<Area> getAreas() {
+        return areaRepository.findAll();
+    }
+
+    @RequestMapping(value="/active", method= RequestMethod.GET)
+    public List<Area> getActiveAreas() {
+        return areaRepository.findByIsActive(true);
+    }
+
+    @RequestMapping(value="/notstart", method= RequestMethod.GET)
+    public List<Area> getAreasExceptStart() {
+        return areaRepository.findByCodeGreaterThan(0);
     }
 
     @RequestMapping(value="/composed", method= RequestMethod.GET)

@@ -1,5 +1,5 @@
 var services = angular.module('services');
-services.factory('areaService',function($http, urlService, hostAddressService){
+services.factory('areaService',function($http, hostAddressService){
     return {     
     	createArea : function(area, callbackSuccess, callbackError){
             $http.post(hostAddressService.hostAddress + 'areas', area).then(function(data){
@@ -42,7 +42,7 @@ services.factory('areaService',function($http, urlService, hostAddressService){
             });          
         },
         getAllAreas : function(callbackSuccess, callbackError){
-            $http.get(hostAddressService.hostAddress + 'areas/composed/' ).then(function(data){
+            $http.get(hostAddressService.hostAddress + 'areas/' ).then(function(data){
             	if (data.status == 200 && data.data !== undefined){       					
                     callbackSuccess(data.data);
                 }
@@ -50,6 +50,16 @@ services.factory('areaService',function($http, urlService, hostAddressService){
                     callbackError("Fel");
                 }
             });          
+        },
+        getAllAreasExceptStart : function(callbackSuccess, callbackError){
+            $http.get(hostAddressService.hostAddress + 'areas/notstart' ).then(function(data){
+                if (data.status == 200 && data.data !== undefined){
+                    callbackSuccess(data.data);
+                }
+                else{
+                    callbackError("Fel");
+                }
+            });
         }
     };
 });

@@ -133,7 +133,7 @@ controllers.controller('editSummaryController',function($scope, $http, $location
 		areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
     };
 	
-    areaService.getAllAreas($scope.successAreaCallback, $scope.errorCallback);
+    areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
 
     $scope.saveSummary =  function(){
     	var inspection = $scope.entity;

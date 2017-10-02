@@ -329,7 +329,7 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
     inspectionService.getLatestInspection(cookieUtilService.getUserId(), new Date($scope.entity.inspectionDate), $scope.updateSuccessCallback, $scope.errorCallback);
 
-    areaService.getAllAreas($scope.successAreaCallback, $scope.errorCallback);
+    areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
 
     // TODO: Handle session
     if (loginService.currentUserId === 0){
@@ -648,21 +648,7 @@ function editActivityTypeController($scope, $http, loginService, entityService, 
 };
 
 
-function areaController($scope, $location, loginService, Area, entityService){
 
-	if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-	
-	$scope.areas = Area.query();
-	
-    $scope.editArea = function (id) {
-        $scope.entity = Area.get({"areaId": id }, function(topic, getResponseHeaders){
-        	entityService.areaToEdit = $scope.entity;
-        	$location.path("/editArea");
-        });
-    };
-};
 
 function createAreaController($scope, $http, $location, Area, areaService, loginService){
     $scope.entity = { name: '', code: '', isActive: 1};

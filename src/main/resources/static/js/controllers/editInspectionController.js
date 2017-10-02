@@ -81,7 +81,7 @@ controllers.controller('editInspectionController',function($scope, $http, $locat
 		areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
     };
 
-    areaService.getAllAreas($scope.successAreaCallback, $scope.errorCallback);
+    areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
 
     $scope.saveReport =  function(){
     	var inspection = $scope.entity;

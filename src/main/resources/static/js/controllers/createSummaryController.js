@@ -105,7 +105,7 @@ controllers.controller('createSummaryController',function($scope, $http, $locati
     var strDate = date.toString("MM/dd/yyyy");
 
     	
-    areaService.getAllAreas($scope.successAreaCallback, $scope.errorCallback);
+    areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
     
     $scope.saveSummary =  function(){
     	var inspection = {};

@@ -1,10 +1,12 @@
 var controllers = angular.module('controllers');
-controllers.controller('userController',function($scope, $location, User, loginService, entityService){
-	$scope.users = User.query();
-    $scope.editUser = function (id) {
-        $scope.entity = User.get({"userId": id }, function(topic, getResponseHeaders){
-        	entityService.userToEdit = $scope.entity;
-        	$location.path("/editUser");
-        });
-    };    
+controllers.controller('userController',function($scope, $location, loginService, entityService, userService, cookieUtilService){
+	$scope.errorCallback = function(message){
+        $scope.errorMessage = message;
+    };
+
+    $scope.successUserCallback = function(data){
+        $scope.users = data;
+    };
+
+    userService.getUsers($scope.successUserCallback, $scope.errorCallback);
 });

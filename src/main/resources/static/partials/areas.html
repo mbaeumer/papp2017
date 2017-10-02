@@ -19,8 +19,8 @@
         <tr ng-repeat="area in areas">
             <td>{{area.name}}</td>
             <td>{{area.code}}</td>
-            <td ng-show="area.isActive == 1">Aktiv</td>
-            <td ng-show="area.isActive == 0">Inaktiv</td>
+            <td ng-show="area.isActive">Aktiv</td>
+            <td ng-show="!area.isActive">Inaktiv</td>
             <td><a class="btn-link" ng-click="editArea(area.id)">Redigera <i class="glyphicon glyphicon-pencil"></i></a></td>
         </tr>
     </table>

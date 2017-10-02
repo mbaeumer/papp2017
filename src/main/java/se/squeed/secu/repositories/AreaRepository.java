@@ -12,5 +12,6 @@ public interface AreaRepository extends JpaRepository<Area, String> {
     List<Area> findAll();
     List<Area> findByIsActive(boolean isActive);
     Area findByCode(int code);
+    List<Area> findByCodeGreaterThan(int code);
 
 }
