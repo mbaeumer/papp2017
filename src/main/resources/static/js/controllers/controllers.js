@@ -4,18 +4,16 @@ app.controller('appController',function($scope, $location, cookieUtilService){
         return viewLocation === $location.path();
     };
 
-    $scope.logout = function(){
-        cookieUtilService.invalidateCookies();
-        $location.path('/home');
-    }
-
     $scope.isAdmin = function () {
+        return $scope.isLoggedIn() && cookieUtilService.getUserType() != '1';
+        /*
         usertype = cookieUtilService.getUserType();
         if (usertype === undefined){
           var isUndef = true;
         }
         result = cookieUtilService.getUserType() !== undefined && usertype != '1';
         return result;
+        */
     };
 
     $scope.isLoggedIn = function(){
