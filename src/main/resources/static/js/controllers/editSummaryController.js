@@ -38,7 +38,14 @@ controllers.controller('editSummaryController',function($scope, $http, $location
 
     $scope.categorySuccessCallback = function(data){
         $scope.categorytypes = data;
-        $scope.selectedCategory = data[0];
+        for (var i = 0; i < $scope.categorytypes.length; i++){
+            var category = {}
+            category = $scope.categorytypes[i];
+            if (category.code === $scope.entity.category.code){
+                selectedIndex = i;
+            }
+        }
+        $scope.selectedCategory = $scope.categorytypes[selectedIndex];
     };
 
     $scope.categoryErrorCallback = function(){
@@ -49,6 +56,15 @@ controllers.controller('editSummaryController',function($scope, $http, $location
     $scope.activitySuccessCallback = function(data){
         $scope.activitytypes = data;
         $scope.selectedActivity = data[0];
+        var selectedIndex = 0;
+        for (var i = 0; i < $scope.activitytypes.length; i++){
+            var activity = {}
+            activity = $scope.activitytypes[i];
+            if (activity.code === $scope.entity.activityType.code){
+                selectedIndex = i;
+            }
+        }
+        $scope.selectedActivity = $scope.activitytypes[selectedIndex];
     };
 
     $scope.activityErrorCallback = function(){
