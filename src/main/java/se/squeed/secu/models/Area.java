@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="AREA")
+@Table(name="AREA", uniqueConstraints={@UniqueConstraint(columnNames = {"code"})})
 @javax.persistence.SequenceGenerator(name = "SEQ_AREA", sequenceName = "SEQ_AREA")
 public class Area {
 	@Id

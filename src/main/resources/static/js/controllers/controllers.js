@@ -650,40 +650,6 @@ function editActivityTypeController($scope, $http, loginService, entityService, 
 
 
 
-function createAreaController($scope, $http, $location, Area, areaService, loginService){
-    $scope.entity = { name: '', code: '', isActive: 1};
-
-    if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-    
-    $scope.title = "Registrera nytt område";
-    
-    $scope.saveArea =  function(){
-    	var area = new Area();
-    	area.name = $scope.entity.name;
-    	area.code = $scope.entity.code;
-    	var isActive = $scope.entity.isActive;
-    	if (isActive){
-    		area.isActive = 1;
-    	}else{
-    		area.isActive = 0;
-    	}
-    	
-    	areaService.createArea(area, $scope.successCallback, $scope.errorCallback);
-    };
-
-    $scope.abortAreaCreation = function(){
-    	$location.path("/areas");
-    };
-    $scope.successCallback = function(){
-        $location.path("/areas");
-    };
-
-    $scope.errorCallback = function(message){
-        $scope.errorMessage = message;
-    };
-};
 
 function editAreaController($scope, $http, loginService, Area, entityService, areaService, $location){
 	$scope.entity = entityService.areaToEdit;

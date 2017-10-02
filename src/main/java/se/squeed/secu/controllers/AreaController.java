@@ -2,11 +2,13 @@ package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import se.squeed.secu.models.Area;
 import se.squeed.secu.models.ComposedArea;
+import se.squeed.secu.models.Inspection;
 import se.squeed.secu.repositories.AreaRepository;
 
 import java.util.ArrayList;
@@ -28,6 +30,17 @@ public class AreaController {
     @RequestMapping(method= RequestMethod.GET)
     public List<Area> getAreas() {
         return areaRepository.findAll();
+    }
+
+    @RequestMapping(method=RequestMethod.POST)
+    public Area create(@RequestBody Area inspection){
+        Area area = null;
+        try {
+            area = areaRepository.save(inspection);
+        }catch (Exception ex){
+
+        }
+        return area;
     }
 
     @RequestMapping(value="/active", method= RequestMethod.GET)

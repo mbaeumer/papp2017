@@ -14,11 +14,12 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
            when('/createSummary', {templateUrl: '/partials/createSummary.html', controller: 'createSummaryController'}).
            when('/editSummary', {templateUrl: '/partials/createSummary.html', controller: 'editSummaryController'}).
            when('/file', {templateUrl: '/partials/summary.html', controller: 'fileController'}).
-           when('/areas', {templateUrl: 'partials/areas.html', controller: 'areaController'}).
-           when('/users', {templateUrl: 'partials/users.html', controller: 'userController'}).
+           when('/areas', {templateUrl: '/partials/areas.html', controller: 'areaController'}).
+           when('/users', {templateUrl: '/partials/users.html', controller: 'userController'}).
+           when('/createArea', {templateUrl: '/partials/createArea.html', controller: 'createAreaController'}).
             /*
             when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
-            when('/createArea', {templateUrl: 'partials/createArea.html', controller: 'createAreaController'}).
+
             when('/editArea', {templateUrl: 'partials/createArea.html', controller: 'editAreaController'}).
             when('/activityTypes', {templateUrl: 'partials/activityTypes.html', controller: 'activityTypeController'}).
             when('/createActivity', {templateUrl: 'partials/createActivityType.html', controller: 'createActivityTypeController'}).

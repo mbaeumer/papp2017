@@ -1,18 +1,20 @@
 var controllers = angular.module('controllers');
-controllers.controller('createAreaController',function($scope, $http, $location, Area, areaService, loginService){
-    $scope.entity = { name: '', code: ''};
+controllers.controller('createAreaController',function($scope, $http, $location, areaService, cookieUtilService){
+   $scope.entity = { name: '', code: '', isActive: true};
 
-    if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-    
-    $scope.title = "Registrera nytt område";
-    
+    if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
+
+    $scope.title = "Registrera nytt omrÃ¥de";
+
     $scope.saveArea =  function(){
-    	var area = new Area();
+    	var area = {};
     	area.name = $scope.entity.name;
     	area.code = $scope.entity.code;
-    	
+    	area.isActive = $scope.entity.isActive;
     	areaService.createArea(area, $scope.successCallback, $scope.errorCallback);
     };
 

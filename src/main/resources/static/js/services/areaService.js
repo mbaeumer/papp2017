@@ -4,7 +4,11 @@ services.factory('areaService',function($http, hostAddressService){
     	createArea : function(area, callbackSuccess, callbackError){
             $http.post(hostAddressService.hostAddress + 'areas', area).then(function(data){
             	if (data.status == 200){                	
-                    callbackSuccess();
+                    if (data.data !== ""){
+                        callbackSuccess();
+                    }else{
+                        callbackError("Kod ej unik");
+                    }
                 }
                 else{
                     callbackError("Kod ej unik");
