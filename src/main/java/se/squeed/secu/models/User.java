@@ -1,30 +1,32 @@
 package se.squeed.secu.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // Spring boot
+//, uniqueConstraints={@UniqueConstraint(columnNames = {"code"})}
 @Entity
-@Table(name="USERS")
+@Table(name="SUSERS")
 @javax.persistence.SequenceGenerator(name = "SEQ_USERS", sequenceName = "SEQ_USERS")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USERS")
-	@Column(name="ID")
 	private int id;
 
-	//@UniqueConstraint("USERCODE")
-	@Column(name="USERCODE")
-	private int userCode;
+	@NotNull
+	private int code;
 
 	@Column(name = "NAME")
-	private String firstName;
+	private String name;
 
 	@JsonIgnore
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@OneToOne
+	@OneToOne(optional=true,fetch=FetchType.EAGER)
+	@NotNull
 	@JoinColumn(name="USERTYPEID")
 	private UserType userType;
 
@@ -36,18 +38,18 @@ public class User {
 	}
 
 	public String getName() {
-		return firstName;
+		return name;
 	}
 
-	public void setName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getUserCode() {
-		return userCode;
+	public int getCode() {
+		return code;
 	}
-	public void setUserCode(int userCode) {
-		this.userCode = userCode;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
 	public String getPassword() {

@@ -1,22 +1,37 @@
 var controllers = angular.module('controllers');
-controllers.controller('createUserController',function($scope, $http, User, UserType, $location, userService, loginService){
+controllers.controller('createUserController',function($scope, $http, $location, userService, cookieUtilService, userTypeService){
     $scope.entity = { name: '', code: '', role: 'vakt'};
 
-    if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-    
-    $scope.roles = UserType.query(function(){
-    	$scope.selectedRole = $scope.roles[0];
-    });
-    
-    $scope.title = "Registrera ny anv‰ndare";
+    if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
+
+	$scope.userTypeSuccessCallback = function(data){
+        $scope.roles = data;
+        $scope.selectedRole = data[0];
+    };
+
+    $scope.userTypeErrorCallback = function(){
+    };
+
+    $scope.successCallback = function(){
+        $location.path("/users");
+    };
+
+    $scope.errorCallback = function(message){
+        $scope.errorMessage = message;
+    };
+
+	userTypeService.getUserTypes($scope.userTypeSuccessCallback, $scope.userTypeErrorCallback)
+
+    $scope.title = "Registrera ny anv√§ndare";
 
     $scope.saveUser =  function(){
-    	var user = new User();
-    	
+    	var user = {};
     	user.name = $scope.entity.name;
-    	user.usercode = $scope.entity.usercode;
+    	user.code = $scope.entity.code;
     	user.userType = { id: $scope.selectedRole.id, name: $scope.selectedRole.name};
     	user.password = $scope.entity.name;
     	userService.createUser(user, $scope.successCallback, $scope.errorCallback);
@@ -24,13 +39,6 @@ controllers.controller('createUserController',function($scope, $http, User, User
 
     $scope.abortUserCreation = function(){
     	$location.path("/users");
-    };
-    $scope.successCallback = function(){
-        $location.path("/users");
-    };
-
-    $scope.errorCallback = function(message){
-        $scope.errorMessage = message;
     };
 });
 

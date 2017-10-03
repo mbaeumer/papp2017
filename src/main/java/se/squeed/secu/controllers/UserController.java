@@ -2,10 +2,8 @@ package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import se.squeed.secu.models.Area;
 import se.squeed.secu.models.Credentials;
 import se.squeed.secu.models.User;
 import se.squeed.secu.repositories.UserRepository;
@@ -37,13 +35,42 @@ public class UserController {
         return users;
     }
 
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    public User getSingleUser(@PathVariable int id) {
+        return userRepository.findById(id);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public User create(@RequestBody User user) {
+        User result = null;
+        try {
+            user.setPassword("4220");
+            result = userRepository.save(user);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public User update(@RequestBody User user) {
+        User result = null;
+        try {
+            result = userRepository.save(user);
+        } catch (Exception ex) {
+
+        }
+        return result;
+    }
+
+
     @RequestMapping(value="login", method=RequestMethod.POST)
     public User authenticate(@RequestBody Credentials credentials){
         User user = null;
         System.out.println("user code" + credentials.getUsercode());
         System.out.println("user pwd" + credentials.getPassword());
 
-        user = userRepository.findByUserCodeAndPassword(credentials.getUsercode(), credentials.getPassword());
+        user = userRepository.findByCodeAndPassword(credentials.getUsercode(), credentials.getPassword());
         if (user != null){
             System.out.println("user found");
         }else{

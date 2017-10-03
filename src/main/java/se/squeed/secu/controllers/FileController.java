@@ -38,7 +38,7 @@ public class FileController {
         content = writeSeparator(content);
         content += getFormattedDate(inspection.getInspectionDate());
         content = writeSeparator(content);
-        content += inspection.getUser().getUserCode();
+        content += inspection.getUser().getCode();
         content = writeSeparator(content);
         if (activityCode == 0) {
             content += inspection.getArea().getCode();

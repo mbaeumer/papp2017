@@ -30,14 +30,16 @@ public class AreaController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Area create(@RequestBody Area inspection) {
-        Area area = null;
+    public Area create(@RequestBody Area area) {
+        Area result = null;
         try {
-            area = areaRepository.save(inspection);
+            System.out.println("ID:" + area.getId());
+
+            result = areaRepository.save(area);
         } catch (Exception ex) {
 
         }
-        return area;
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.PUT)

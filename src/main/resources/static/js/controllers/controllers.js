@@ -421,8 +421,6 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     $scope.isInspection = true;
 });
 
-
-
 app.controller('summaryController',function($scope, $location, summaryService, entityService, fileService, cookieUtilService, metaSummaryService, inspectionService, filterService){
 
     //TODO: Handle session
@@ -647,87 +645,6 @@ function editActivityTypeController($scope, $http, loginService, entityService, 
     };
 };
 
-
-
-
-
-function editAreaController($scope, $http, loginService, Area, entityService, areaService, $location){
-	$scope.entity = entityService.areaToEdit;
-	$scope.title = "Redigera område";
-
-	if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-	
-	$scope.saveArea =  function(){
-    	var area = $scope.entity;  	
-    	area.name = $scope.entity.name;
-    	area.code = $scope.entity.code;
-    	var isActive = $scope.entity.isActive;
-    	if (isActive){
-    		area.isActive = 1;
-    	}else{
-    		area.isActive = 0;
-    	}
-    	areaService.editArea(area, $scope.successCallback, $scope.errorCallback);
-    };
-
-    $scope.abortAreaCreation = function(){
-    	$location.path("/areas");
-    };
-    $scope.successCallback = function(){
-        $location.path("/areas");
-    };
-
-    $scope.errorCallback = function(message){
-        $scope.errorMessage = message;
-    };
-};
-
-function userController($scope, $location, User, loginService, entityService){
-	$scope.users = User.query();
-    $scope.editUser = function (id) {
-        $scope.entity = User.get({"userId": id }, function(topic, getResponseHeaders){
-        	entityService.userToEdit = $scope.entity;
-        	$location.path("/editUser");
-        });
-    };    
-};
-
-function createUserController($scope, $http, User, UserType, $location, userService, loginService){
-    $scope.entity = { name: '', code: '', role: 'vakt'};
-
-    if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-    
-    $scope.roles = UserType.query(function(){
-    	$scope.selectedRole = $scope.roles[0];
-    });
-    
-    $scope.title = "Registrera ny användare";
-
-    $scope.saveUser =  function(){
-    	var user = new User();
-    	
-    	user.name = $scope.entity.name;
-    	user.usercode = $scope.entity.usercode;
-    	user.userType = { id: $scope.selectedRole.id, name: $scope.selectedRole.name};
-    	user.password = $scope.entity.name;
-    	userService.createUser(user, $scope.successCallback, $scope.errorCallback);
-    };
-
-    $scope.abortUserCreation = function(){
-    	$location.path("/users");
-    };
-    $scope.successCallback = function(){
-        $location.path("/users");
-    };
-
-    $scope.errorCallback = function(message){
-        $scope.errorMessage = message;
-    };
-};
 
 function editUserController($scope, $http, $location, loginService, User, UserType, entityService, userService){
 	$scope.entity = entityService.userToEdit;

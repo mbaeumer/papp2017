@@ -7,5 +7,6 @@ import se.squeed.secu.models.User;
  * Created by martinbaumer on 28/07/16.
  */
 public interface UserRepository extends JpaRepository<User, String> {
-    User findByUserCodeAndPassword(int userCode, String password);
+    User findById(int id);
+    User findByCodeAndPassword(int code, String password);
 }
