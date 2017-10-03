@@ -17,10 +17,11 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
            when('/areas', {templateUrl: '/partials/areas.html', controller: 'areaController'}).
            when('/users', {templateUrl: '/partials/users.html', controller: 'userController'}).
            when('/createArea', {templateUrl: '/partials/createArea.html', controller: 'createAreaController'}).
+           when('/editArea', {templateUrl: 'partials/createArea.html', controller: 'editAreaController'}).
             /*
             when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
 
-            when('/editArea', {templateUrl: 'partials/createArea.html', controller: 'editAreaController'}).
+
             when('/activityTypes', {templateUrl: 'partials/activityTypes.html', controller: 'activityTypeController'}).
             when('/createActivity', {templateUrl: 'partials/createActivityType.html', controller: 'createActivityTypeController'}).
             when('/editActivity', {templateUrl: 'partials/createActivityType.html', controller: 'editActivityTypeController'}).            

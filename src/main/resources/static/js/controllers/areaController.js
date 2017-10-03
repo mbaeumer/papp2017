@@ -12,17 +12,22 @@ controllers.controller('areaController',function($scope, $location, loginService
 	$scope.successAreaCallback = function(data){
         $scope.areas = data;
     };
+
+    $scope.editArea = function (id) {
+        areaService.getSingleArea(id, $scope.successReadSingleCallback, $scope.errorReadSingleCallback);
+    };
+
+    $scope.successReadSingleCallback = function(data){
+        areaService.currentArea = data;
+        $location.path("/editArea");
+    }
+
+    $scope.errorReadSingleCallback = function(message){
+        $scope.errorMessage = message;
+    }
 	
 	areaService.getAllAreasExceptStart($scope.successAreaCallback, $scope.errorCallback);
 
-	/*
-    $scope.editArea = function (id) {
-        $scope.entity = Area.get({"areaId": id }, function(topic, getResponseHeaders){
-        	entityService.areaToEdit = $scope.entity;
-        	$location.path("/editArea");
-        });
-    };
-    */
 });
 
 

@@ -18,7 +18,11 @@ services.factory('areaService',function($http, hostAddressService){
         editArea : function(area, callbackSuccess, callbackError){
             $http.put(hostAddressService.hostAddress + 'areas', area).then(function(data){
             	if (data.status == 200){                	
-                    callbackSuccess();
+                    if (data.data !== ""){
+                        callbackSuccess();
+                    }else{
+                        callbackError("Kod ej unik");
+                    }
                 }
                 else{
                     callbackError("Kod ej unik");
@@ -64,6 +68,19 @@ services.factory('areaService',function($http, hostAddressService){
                     callbackError("Fel");
                 }
             });
+        },
+        getSingleArea : function(id, successCallback, errorCallback){
+            $http.get(hostAddressService.hostAddress + 'areas/get/' + id).then(function(response){
+                 if (response.status == 200){
+                     if (response.data.length === 0){
+                         errorCallback(response);
+                     }else{
+                         successCallback(response.data);
+                     }
+                 }else{
+                         errorCallback('An unknown error occurred');
+                 }
+             });
         }
     };
 });

@@ -2,10 +2,7 @@ package se.squeed.secu.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.squeed.secu.models.Area;
 import se.squeed.secu.models.ComposedArea;
 import se.squeed.secu.models.Inspection;
@@ -23,41 +20,52 @@ public class AreaController {
     private AreaRepository areaRepository;
 
     @Autowired
-    public AreaController(AreaRepository areaRepository){
+    public AreaController(AreaRepository areaRepository) {
         this.areaRepository = areaRepository;
     }
 
-    @RequestMapping(method= RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Area> getAreas() {
         return areaRepository.findAll();
     }
 
-    @RequestMapping(method=RequestMethod.POST)
-    public Area create(@RequestBody Area inspection){
+    @RequestMapping(method = RequestMethod.POST)
+    public Area create(@RequestBody Area inspection) {
         Area area = null;
         try {
             area = areaRepository.save(inspection);
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         return area;
     }
 
-    @RequestMapping(value="/active", method= RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.PUT)
+    public Area update(@RequestBody Area area) {
+        Area result = null;
+        try {
+            result = areaRepository.save(area);
+        } catch (Exception ex) {
+
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
     public List<Area> getActiveAreas() {
         return areaRepository.findByIsActive(true);
     }
 
-    @RequestMapping(value="/notstart", method= RequestMethod.GET)
+    @RequestMapping(value = "/notstart", method = RequestMethod.GET)
     public List<Area> getAreasExceptStart() {
         return areaRepository.findByCodeGreaterThan(0);
     }
 
-    @RequestMapping(value="/composed", method= RequestMethod.GET)
-    public List<ComposedArea> findComposed(Model model){
+    @RequestMapping(value = "/composed", method = RequestMethod.GET)
+    public List<ComposedArea> findComposed(Model model) {
         List<ComposedArea> composedAreas = new ArrayList<ComposedArea>();
         List<Area> areas = areaRepository.findByIsActive(true);
-        for (Area a : areas){
+        for (Area a : areas) {
             ComposedArea ca = new ComposedArea();
             ca.setId(a.getId());
             ca.setCode(new Integer(a.getCode()).toString());
@@ -68,8 +76,13 @@ public class AreaController {
         return composedAreas;
     }
 
-    @RequestMapping(value="/pseudo", method= RequestMethod.GET)
-    public Area findPseudoArea(){
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    public Area getSingleArea(@PathVariable int id) {
+        return areaRepository.findById(id);
+    }
+
+    @RequestMapping(value = "/pseudo", method = RequestMethod.GET)
+    public Area findPseudoArea() {
         return areaRepository.findByCode(0);
     }
 }

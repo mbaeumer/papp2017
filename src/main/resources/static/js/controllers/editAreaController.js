@@ -1,16 +1,19 @@
 var controllers = angular.module('controllers');
-controllers.controller('editAreaController',function($scope, $http, loginService, Area, entityService, areaService, $location){
-	$scope.entity = entityService.areaToEdit;
-	$scope.title = "Redigera område";
+controllers.controller('editAreaController',function($scope, $http, loginService, areaService, cookieUtilService, $location){
+	$scope.entity = areaService.currentArea;
+	$scope.title = "Redigera omrade";
 
-	if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
+	if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
 	
 	$scope.saveArea =  function(){
     	var area = $scope.entity;  	
     	area.name = $scope.entity.name;
     	area.code = $scope.entity.code;
+    	area.isActive = $scope.entity.isActive;
     	areaService.editArea(area, $scope.successCallback, $scope.errorCallback);
     };
 
