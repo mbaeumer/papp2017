@@ -26,7 +26,7 @@ controllers.controller('createUserController',function($scope, $http, $location,
 
 	userTypeService.getUserTypes($scope.userTypeSuccessCallback, $scope.userTypeErrorCallback)
 
-    $scope.title = "Registrera ny användare";
+    $scope.title = "Registrera ny anv&auml;ndare";
 
     $scope.saveUser =  function(){
     	var user = {};

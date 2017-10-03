@@ -17,6 +17,7 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
            when('/areas', {templateUrl: '/partials/areas.html', controller: 'areaController'}).
            when('/users', {templateUrl: '/partials/users.html', controller: 'userController'}).
            when('/createUser', {templateUrl: 'partials/createUser.html', controller: 'createUserController'}).
+           when('/editUser', {templateUrl: 'partials/createUser.html', controller: 'editUserController'}).
            when('/createArea', {templateUrl: '/partials/createArea.html', controller: 'createAreaController'}).
            when('/editArea', {templateUrl: 'partials/createArea.html', controller: 'editAreaController'}).
             /*
@@ -24,7 +25,7 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
             when('/activityTypes', {templateUrl: 'partials/activityTypes.html', controller: 'activityTypeController'}).
             when('/createActivity', {templateUrl: 'partials/createActivityType.html', controller: 'createActivityTypeController'}).
             when('/editActivity', {templateUrl: 'partials/createActivityType.html', controller: 'editActivityTypeController'}).            
-            when('/editUser', {templateUrl: 'partials/createUser.html', controller: 'editUserController'}).
+
             when('/categoryTypes', {templateUrl: 'partials/categoryTypes.html', controller: 'categoryTypeController'}).
             when('/createCategory', {templateUrl: 'partials/createCategoryType.html', controller: 'createCategoryTypeController'}).
             when('/editCategory', {templateUrl: 'partials/createCategoryType.html', controller: 'editCategoryTypeController'}).

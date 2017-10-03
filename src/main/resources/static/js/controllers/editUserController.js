@@ -1,16 +1,36 @@
 var controllers = angular.module('controllers');
-controllers.controller('editUserController',function($scope, $http, $location, loginService, User, UserType, entityService, userService){
-	$scope.entity = entityService.userToEdit;
-	
-	$scope.title = "Redigera användare";
-	$scope.roles = UserType.query(function(){
-		$scope.selectedRole = $scope.roles[$scope.entity.userType.id-1];
-    });
-	
-	if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
-	
+controllers.controller('editUserController',function($scope, $http, $location, userService, cookieUtilService, userTypeService){
+	$scope.entity = userService.currentUser;
+
+	if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
+
+	$scope.title = "Redigera anv&auml;ndare";
+
+    $scope.userTypeSuccessCallback = function(data){
+        $scope.roles = data;
+        $scope.selectedRole = data[0];
+        var selectedIndex = 0;
+        for (var i = 0; i<$scope.roles.length;i++){
+            var role = {id:0};
+            role.id = $scope.roles[i].id;
+
+            if (role.id === $scope.entity.userType.id){
+                selectedIndex = i;
+            }
+        }
+        $scope.selectedRole = $scope.roles[selectedIndex];
+    };
+
+    $scope.userTypeErrorCallback = function(){
+    };
+
+    userTypeService.getUserTypes($scope.userTypeSuccessCallback, $scope.userTypeErrorCallback)
+
+
 	$scope.saveUser =  function(){
     	var user = $scope.entity;
     	user.name = $scope.entity.name;
