@@ -3,9 +3,11 @@ controllers.controller('createSummaryController',function($scope, $http, $locati
     $scope.entity = { inspectionDate: new Date(), guard: '', area: '', startHour: '00', startMinute: '00', stopHour: '00', stopMinute: '00',
         fined: '', activity: '', category: ''};
     
-    if (cookieUtilService.getUserId() === 0){
-		$location.path("/home");
-	}
+    if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
     
     $scope.separateTravelTime = false;
 

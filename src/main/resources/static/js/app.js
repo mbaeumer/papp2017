@@ -16,10 +16,10 @@ var app = angular.module('app', ['controllers','services','ngRoute','directives'
            when('/file', {templateUrl: '/partials/summary.html', controller: 'fileController'}).
            when('/areas', {templateUrl: '/partials/areas.html', controller: 'areaController'}).
            when('/users', {templateUrl: '/partials/users.html', controller: 'userController'}).
-           when('/createUser', {templateUrl: 'partials/createUser.html', controller: 'createUserController'}).
-           when('/editUser', {templateUrl: 'partials/createUser.html', controller: 'editUserController'}).
+           when('/createUser', {templateUrl: '/partials/createUser.html', controller: 'createUserController'}).
+           when('/editUser', {templateUrl: '/partials/createUser.html', controller: 'editUserController'}).
            when('/createArea', {templateUrl: '/partials/createArea.html', controller: 'createAreaController'}).
-           when('/editArea', {templateUrl: 'partials/createArea.html', controller: 'editAreaController'}).
+           when('/editArea', {templateUrl: '/partials/createArea.html', controller: 'editAreaController'}).
             /*
             when('/profile', {templateUrl: 'partials/profile.html', controller: 'profileController'}).
             when('/activityTypes', {templateUrl: 'partials/activityTypes.html', controller: 'activityTypeController'}).

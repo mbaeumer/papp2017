@@ -263,6 +263,12 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     $scope.statusMessage = '';
     $scope.separateTravelTime = false;
 
+    if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
+
     $scope.successCallback = function(){
     	if ($scope.separateTravelTime === true){
     		areaService.getPseudoArea($scope.successTravelAreaCallback, $scope.errorCallback);
@@ -331,10 +337,11 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
     areaService.getComposedAreas($scope.successAreaCallback, $scope.errorCallback);
 
-    // TODO: Handle session
-    if (loginService.currentUserId === 0){
-		$location.path("/home");
-	}
+    if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
 
     $scope.title = "Registrera ny rapport";
 
@@ -352,6 +359,13 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     };
 
     $scope.saveReport =  function(){
+
+        if (!cookieUtilService.isCookieValid()){
+            $location.path('/login');
+        }else{
+            cookieUtilService.extendCookie();
+        }
+
     	$scope.errorMessage = '';
     	$scope.statusMessage = 'Sparar informationer';
     	var inspection = {};
@@ -423,10 +437,11 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
 
 app.controller('summaryController',function($scope, $location, summaryService, entityService, fileService, cookieUtilService, metaSummaryService, inspectionService, filterService){
 
-    //TODO: Handle session
-	if (cookieUtilService.getUserId() === 0){
-		$location.path("/home");
-	}
+	if (!cookieUtilService.isCookieValid()){
+        $location.path('/login');
+    }else{
+        cookieUtilService.extendCookie();
+    }
 
     $scope.successCallback = function(data){
         $scope.reports = data;
@@ -470,8 +485,22 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     };
 
     $scope.deleteSummary = function (id) {
-        // TODO: Complete
+        inspectionService.getSingleInspection(id, $scope.successReadSingleForDeletionCallback, $scope.errorReadSingleCallback);
     };
+
+    $scope.successReadSingleForDeletionCallback = function(data){
+        inspectionService.deleteInspection(data.id, $scope.successDeletionCallback, $scope.errorDeletionCallback);
+    };
+
+    $scope.successDeletionCallback = function(){
+         $scope.requestData = {};
+         $scope.requestData.userid = cookieUtilService.getUserId();
+         $scope.requestData.date = new Date();
+         $scope.requestData.date.setHours(18);
+         $scope.requestData.date.setMinutes(00);
+         $scope.requestData.date.setSeconds(00);
+         summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+    }
 
     $scope.setDateFilter = function(period){
     	var dateString = new Date().toString("MM/dd/yyyy");

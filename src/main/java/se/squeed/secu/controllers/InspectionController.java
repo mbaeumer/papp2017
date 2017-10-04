@@ -34,7 +34,7 @@ public class InspectionController {
     @RequestMapping(method=RequestMethod.POST)
     public StatusMessage create(@RequestBody Inspection inspection){
         StatusMessage statusMessage = null;
-        String message = null;
+        String message = "";
         String status = "";
         String area = (inspection.getArea() == null) ? "Area null" : "Area ok";
         String cat = (inspection.getCategory() == null) ? "Cat null" : "Cat ok";
@@ -61,7 +61,7 @@ public class InspectionController {
     @RequestMapping(method=RequestMethod.PUT)
     public  StatusMessage update(@RequestBody Inspection inspection){
         StatusMessage statusMessage = null;
-        String message = null;
+        String message = "";
         String status = "";
         String area = (inspection.getArea() == null) ? "Area null" : "Area ok";
         String cat = (inspection.getCategory() == null) ? "Cat null" : "Cat ok";
