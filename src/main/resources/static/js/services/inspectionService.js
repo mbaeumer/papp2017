@@ -5,7 +5,11 @@ services.factory('inspectionService',function($http, loginService, urlService, h
         createInspection : function(inspection, callbackSuccess, callbackError){
             $http.post(hostAddressService.hostAddress + 'inspections', inspection).then(function(data){
             	if (data.status == 200){
-            	  callbackSuccess();
+            	  if (data.data.length === 0){
+            	    callbackSuccess();
+            	  }else{
+            	    callbackError(data.data);
+            	  }
             	}else{
             	  callbackError(data.data);
             	}
@@ -14,7 +18,11 @@ services.factory('inspectionService',function($http, loginService, urlService, h
         editInspection : function(inspection, callbackSuccess, callbackError){
             $http.put(hostAddressService.hostAddress + 'inspections', inspection).then(function(data){
                 if (data.status == 200){
-                  callbackSuccess();
+                  if (data.data.length === 0){
+                    callbackSuccess();
+                  }else{
+                    callbackError(data.data);
+                  }
                 }else{
                   callbackError(data.data);
                 }
@@ -63,6 +71,9 @@ services.factory('inspectionService',function($http, loginService, urlService, h
                      errorCallback('An unknown error occurred');
                  }
              });
+        },
+        cancel : function(successCallback){
+            successCallback("error")
         }
     };
 });

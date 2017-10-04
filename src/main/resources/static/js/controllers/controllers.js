@@ -382,36 +382,36 @@ app.controller('createInspectionController',function($scope, $http, inspectionSe
     	inspection.area = { id: $scope.selectedArea.originalObject.id, name: $scope.selectedArea.originalObject.name};
     	$scope.inspection = inspection;
 
-    	if (((parseInt($scope.selectedTravelHour.value)) !== parseInt($scope.selectedStartHour.value))
-				|| ((parseInt($scope.selectedTravelMinute.value)) !== parseInt($scope.selectedStartMinute.value))){
+        if (((parseInt($scope.selectedTravelHour.value)) !== parseInt($scope.selectedStartHour.value))
+                || ((parseInt($scope.selectedTravelMinute.value)) !== parseInt($scope.selectedStartMinute.value))){
 
-    		$scope.separateTravelTime = true;
-			var travelInspection = {};
+            $scope.separateTravelTime = true;
+            var travelInspection = {};
 
-			travelInspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
+            travelInspection.inspectionDate = new Date(inspection.inspectionDate).setHours(18);
             travelInspection.inspectionDate = new Date(inspection.inspectionDate).setMinutes(00);
             travelInspection.inspectionDate = new Date(inspection.inspectionDate).setSeconds(00);
 
-    		travelInspection.travel = new Date(inspection.inspectionDate);
-    		travelInspection.startTime = new Date(inspection.travel);
-    		travelInspection.endTime = new Date(inspection.startTime);
+            travelInspection.travel = new Date(inspection.inspectionDate);
+            travelInspection.startTime = new Date(inspection.travel);
+            travelInspection.endTime = new Date(inspection.startTime);
 
-    		travelInspection.startTime = new Date(travelInspection.startTime).setHours((parseInt($scope.selectedTravelHour.value)));
-    		travelInspection.startTime = new Date(travelInspection.startTime).setMinutes((parseInt($scope.selectedTravelMinute.value)));
-    		travelInspection.travel = new Date(travelInspection.startTime);
+            travelInspection.startTime = new Date(travelInspection.startTime).setHours((parseInt($scope.selectedTravelHour.value)));
+            travelInspection.startTime = new Date(travelInspection.startTime).setMinutes((parseInt($scope.selectedTravelMinute.value)));
+            travelInspection.travel = new Date(travelInspection.startTime);
 
-        	travelInspection.fined = 0;
-        	travelInspection.warnings = 0;
-        	travelInspection.obliterated = 0;
+            travelInspection.fined = 0;
+            travelInspection.warnings = 0;
+            travelInspection.obliterated = 0;
 
-        	travelInspection.activityType = { id: 3, code: 2, description: 'Restid'};
-        	travelInspection.companyCode = entityService.currentCompanyCode;
-        	travelInspection.user = { id: cookieUtilService.getUserId()};
-        	travelInspection.category = { id: 1, code: 0, description: 'inga lappar'};
+            travelInspection.activityType = { id: 3, code: 2, description: 'Restid'};
+            travelInspection.companyCode = entityService.currentCompanyCode;
+            travelInspection.user = { id: cookieUtilService.getUserId()};
+            travelInspection.category = { id: 1, code: 0, description: 'inga lappar'};
 
-        	$scope.travelInspection = travelInspection;
-		}
-    	inspectionService.createInspection(inspection, $scope.successCallback, $scope.errorCallback);
+            $scope.travelInspection = travelInspection;
+        }
+        inspectionService.createInspection(inspection, $scope.successCallback, $scope.errorCallback);
     };
 
     $scope.abortReportCreation = function(){

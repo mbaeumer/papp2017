@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.squeed.secu.models.*;
 import se.squeed.secu.repositories.InspectionRepository;
+import se.squeed.secu.util.ValidationResult;
+import se.squeed.secu.util.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +32,36 @@ public class InspectionController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public Inspection create(@RequestBody Inspection inspection){
+    public StatusMessage create(@RequestBody Inspection inspection){
+        StatusMessage statusMessage = null;
+        String message = null;
         String status = "";
         String area = (inspection.getArea() == null) ? "Area null" : "Area ok";
         String cat = (inspection.getCategory() == null) ? "Cat null" : "Cat ok";
         String user = (inspection.getUser() == null) ? "User null" : "User ok";
         String activity = (inspection.getActivityType() == null) ? "Activity null" : "Activity ok";
+        ValidationResult validationResult = ValidationUtils.validate(inspection);
         status += area + cat +  user + activity;
         System.out.println(status);
-        return inspectionRepository.save(inspection);
+        if (validationResult == ValidationResult.OK) {
+            Inspection result = inspectionRepository.save(inspection);
+            if (result == null) {
+                message = "An unknown error occurred!";
+            }
+        }else{
+            message = ValidationUtils.getMessage(validationResult);
+        }
+        if (message.length() > 0){
+            statusMessage = new StatusMessage();
+            statusMessage.setText(message);
+        }
+        return statusMessage;
     }
 
     @RequestMapping(method=RequestMethod.PUT)
-    public  Inspection update(@RequestBody Inspection inspection){
+    public  StatusMessage update(@RequestBody Inspection inspection){
+        StatusMessage statusMessage = null;
+        String message = null;
         String status = "";
         String area = (inspection.getArea() == null) ? "Area null" : "Area ok";
         String cat = (inspection.getCategory() == null) ? "Cat null" : "Cat ok";
@@ -50,8 +69,22 @@ public class InspectionController {
         String activity = (inspection.getActivityType() == null) ? "Activity null" : "Activity ok";
         status += area + cat +  user + activity;
         System.out.println(status);
-        inspectionRepository.save(inspection);
-        return inspection;
+        ValidationResult validationResult = ValidationUtils.validate(inspection);
+        if (validationResult == ValidationResult.OK) {
+            Inspection result = inspectionRepository.save(inspection);
+            if (result == null) {
+                message = "An unknown error occurred!";
+            }
+        }else{
+            message = ValidationUtils.getMessage(validationResult);
+
+        }
+        if (message.length() > 0){
+            statusMessage = new StatusMessage();
+            statusMessage.setText(message);
+        }
+        return statusMessage;
+
     }
 
     @RequestMapping(value="my", method=RequestMethod.POST)
