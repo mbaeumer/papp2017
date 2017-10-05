@@ -35,7 +35,7 @@
         </thead>
         <tr ng-repeat="report in reports">
             <td>{{report.inspectionDate | date: 'yyyy-MM-dd'}}</td>
-            <td>{{report.guard.name}} ({{report.guard.userCode}})</td>
+            <td>{{report.guard.name}} ({{report.guard.code}})</td>
             <td>{{report.area.code !==0 ? report.area.code : report.activityType.description}}</td>
             <td>{{report.travel | date: 'HH:mm'}}</td>
             <td>{{report.startTime | date: 'HH:mm'}}</td>
@@ -57,7 +57,7 @@
         	<td class="sum">{{metaSummary.totalFined}}</td>
         	<td class="sum">&nbsp;</td>
         	<td class="sum_label">Total tid:</td>
-        	<td class="sum">{{metaSummary.totalTime.value}}</td>
+        	<td class="sum">{{metaSummary.totalTimeValue}}</td>
         	<td class="sum_label">Totaltid decimal:</td>
         	<td class="sum">{{metaSummary.totalDecimalTime | number: 2}}</td>
         	<td class="sum_label">Snitt:</td>

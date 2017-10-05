@@ -444,8 +444,12 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     }
 
     $scope.successCallback = function(data){
-        $scope.reports = data;
-        $location.path("/summary");
+        $scope.reports = data.summaries;
+        $scope.metaSummary = {}
+        $scope.metaSummary.totalFined = data.totalFined;
+        $scope.metaSummary.totalTimeValue = data.totalTimeValue;
+        $scope.metaSummary.totalDecimalTime = data.totalDecimalTime;
+        $scope.metaSummary.average = data.average;
     }
 
     $scope.errorCallback = function(){

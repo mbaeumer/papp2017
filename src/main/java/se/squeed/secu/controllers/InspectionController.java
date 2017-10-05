@@ -130,14 +130,25 @@ public class InspectionController {
     }
 
     @RequestMapping(value="summary", method= RequestMethod.POST)
-    public List<Summary> getSummaryBetweenDates(@RequestBody SummaryParam summaryParam)  {
+    public MetaSummary getSummaryBetweenDates(@RequestBody SummaryParam summaryParam)  {
+        MetaSummary metaSummary = new MetaSummary();
+        long totalDuration = 0;
+        int totalFined = 0;
         List<Inspection> inspections = inspectionRepository.findAllByInspectionDateBetweenOrderByUserAscInspectionDateDescStartTimeAsc(summaryParam.getFromDate(), summaryParam.getToDate());
         List<Summary> summaries = new ArrayList<>();
         for (Inspection inspection : inspections){
             Summary summary = new Summary();
             summary.setInspection(inspection);
+            totalDuration += summary.getDuration();
+            totalFined += summary.getFined();
             summaries.add(summary);
         }
-        return summaries;
+        metaSummary.setSummaries(summaries);
+        metaSummary.setTotalFined(totalFined);
+        metaSummary.setTotalTimInMinutes(totalDuration / 60);
+        metaSummary.setTotalDecimalTime();
+        metaSummary.setTotalTimeValue();
+        metaSummary.setAverage(metaSummary.getTotalFined() / metaSummary.getTotalDecimalTime());
+        return metaSummary;
     }
 }

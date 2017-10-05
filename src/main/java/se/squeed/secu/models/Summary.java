@@ -128,7 +128,8 @@ public class Summary {
 
 	private void setDurationValue(){
 		long hours = duration / 3600;
-		long minutes = duration / 60;
+		long remainder = duration % 3600;
+		long minutes = remainder / 60;
 		StringBuilder sb = new StringBuilder();
 		String hourString = new Long(hours).toString();
 		if (hourString.length() < 2){
