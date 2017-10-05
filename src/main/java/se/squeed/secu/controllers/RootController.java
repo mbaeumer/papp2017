@@ -12,7 +12,7 @@ public class RootController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homepage() {
         System.out.print("in RootController\n");
-        return "index";
+        return "redirect:/index.html";
     }
 
     @RequestMapping(value = "/glucometriq", method = RequestMethod.GET)
