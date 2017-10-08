@@ -1,5 +1,5 @@
 var services = angular.module('services');
-services.factory('fileService',function($http, urlService){
+services.factory('fileService',function($http, hostAddressService){
     return {
         startDate: "",
         endDate: "",
