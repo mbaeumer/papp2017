@@ -5,7 +5,7 @@ services.factory('fileService',function($http, urlService){
         endDate: "",
         getFile : function(callbackSuccess, callbackError){
             start = this.startDate.toString("MM/dd/yyyy");
-        	var url = urlService.baseRESTURL + 'files/download';
+        	var url = hostAddressService.hostAddress + 'files/download';
         	url += '?from=' + this.startDate + '&to=' + this.endDate;
             $http.get(url).then(function(data){
                 if (data.status == 200){        	

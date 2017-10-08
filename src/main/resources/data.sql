@@ -117,7 +117,7 @@ INSERT INTO AREA (ID, CODE, NAME, ISACTIVE) VALUES
 (3, 1418, 'Almedalsvägen BILIA', FALSE),
 (4, 1009, 'Amerikaskjulet', TRUE),
 (5, 1330, 'Amiralitetsgatan 24 A-S', TRUE),
-(805, 0, 'Start/Stop', 0);
+(805, 0, 'Start/Stop', FALSE);
 
 -- activitytypes
 INSERT INTO ACTIVITYTYPE (ID, CODE, DESCRIPTION) VALUES (1, 0, '-');
