@@ -84,7 +84,7 @@ controllers.controller('editSummaryController',function($scope, $http, $location
             composedUser.value = $scope.rawUsers[i].code + " " + $scope.rawUsers[i].name ;
             $scope.composedUsers.push(composedUser);
 
-            if (composedUser.userCode === $scope.entity.user.userCode){
+            if (composedUser.userCode === $scope.entity.user.code){
                 selectedIndex = i;
             }
         }
