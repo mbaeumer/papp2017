@@ -506,6 +506,24 @@ app.controller('summaryController',function($scope, $location, summaryService, e
          summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
     }
 
+    $scope.customDate = '';
+
+    $scope.updateCustomDateFilter() = function(){
+        if ($scope.customDate !== ''){
+            $scope.summaryParam = {};
+            $scope.summaryParam.toDate.setDate($scope.customDate.getDate());
+            $scope.summaryParam.toDate.setHours(21);
+            $scope.summaryParam.toDate.setMinutes(59);
+            $scope.summaryParam.toDate.setSeconds(59);
+
+            $scope.summaryParam.fromDate = new Date($scope.summaryParam.toDate);
+            $scope.summaryParam.fromDate.setHours(00);
+            $scope.summaryParam.fromDate.setMinutes(00);
+            $scope.summaryParam.fromDate.setSeconds(00);
+            summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+        }
+    }
+
     $scope.setDateFilter = function(period){
     	var dateString = new Date().toString("MM/dd/yyyy");
     	var startDate = new Date(dateString);
@@ -533,7 +551,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
             $scope.summaryParam.fromDate = new Date($scope.summaryParam.toDate);
             $scope.summaryParam.fromDate.setHours(00);
             $scope.summaryParam.fromDate.setMinutes(00);
-            $scope.summaryParam.fromDate.setSeconds(00)
+            $scope.summaryParam.fromDate.setSeconds(00);
             summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
     	}
     	/*
