@@ -524,6 +524,11 @@ app.controller('summaryController',function($scope, $location, summaryService, e
             $scope.summaryParam.fromDate.setMinutes(00);
             $scope.summaryParam.fromDate.setSeconds(00);
             summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+
+            fileService.startDate = $scope.summaryParam.fromDate;
+            fileService.endDate = $scope.summaryParam.toDate;
+            filterService.startDate = $scope.summaryParam.fromDate;
+            filterService.endDate = $scope.summaryParam.toDate;
         }
     }
 
