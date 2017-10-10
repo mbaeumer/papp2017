@@ -535,7 +535,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 
     	if (period === 'today'){
     	    $scope.summaryParam.fromDate = new Date();
-    	    $scope.summaryParam.fromDate.setHours(18);
+    	    $scope.summaryParam.fromDate.setHours(00);
             $scope.summaryParam.fromDate.setMinutes(00);
             $scope.summaryParam.fromDate.setSeconds(00);
             $scope.summaryParam.toDate = new Date();

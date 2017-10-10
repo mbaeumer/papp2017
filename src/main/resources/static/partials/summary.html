@@ -14,16 +14,14 @@
 		<li><a href ng-click="setDateFilter('today')">idag</a></li>
 		<li><a href ng-click="setDateFilter('yesterday')">ig&aring;r</a></li>
         <li>
-            <div class="block">
-                <md-content>
-                    <md-datepicker
-                            onkeydown="return false"
-                            ng-model="customDate"
-                            md-placeholder="Enter date"
-                            ng-change="updateCustomDateFilter();">
-                    </md-datepicker>
-                </md-content>
-            </div>
+            <md-content>
+                <md-datepicker
+                        onkeydown="return false"
+                        ng-model="customDate"
+                        md-placeholder="Annat datum"
+                        ng-change="updateCustomDateFilter();">
+                </md-datepicker>
+            </md-content>
         </li>
     </ul>
     {{summaryParam.fromDate | date: 'yyyy-MM-dd HH:mm'}}
