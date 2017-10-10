@@ -509,7 +509,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 
     $scope.customDate = '';
 
-    $scope.updateCustomDateFilter() = function(){
+    $scope.updateCustomDateFilter = function(){
         if ($scope.customDate !== ''){
             $scope.summaryParam = {};
             $scope.summaryParam.toDate.setDate($scope.customDate.getDate());
