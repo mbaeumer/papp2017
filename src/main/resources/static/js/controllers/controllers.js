@@ -512,11 +512,13 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     $scope.updateCustomDateFilter = function(){
         if ($scope.customDate !== ''){
             $scope.summaryParam = {};
+            $scope.summaryParam.toDate = new Date();
             $scope.summaryParam.toDate.setDate($scope.customDate.getDate());
             $scope.summaryParam.toDate.setHours(21);
             $scope.summaryParam.toDate.setMinutes(59);
             $scope.summaryParam.toDate.setSeconds(59);
 
+            $scope.summaryParam.fromDate = new Date();
             $scope.summaryParam.fromDate = new Date($scope.summaryParam.toDate);
             $scope.summaryParam.fromDate.setHours(00);
             $scope.summaryParam.fromDate.setMinutes(00);
