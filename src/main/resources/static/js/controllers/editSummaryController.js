@@ -80,8 +80,8 @@ controllers.controller('editSummaryController',function($scope, $http, $location
             var composedUser = {id:0,userCode:0,name:''};
             composedUser.id = $scope.rawUsers[i].id;
             composedUser.name = $scope.rawUsers[i].name;
-            composedUser.userCode = $scope.rawUsers[i].userCode;
-            composedUser.value = $scope.rawUsers[i].userCode + " " + $scope.rawUsers[i].name ;
+            composedUser.userCode = $scope.rawUsers[i].code;
+            composedUser.value = $scope.rawUsers[i].code + " " + $scope.rawUsers[i].name ;
             $scope.composedUsers.push(composedUser);
 
             if (composedUser.userCode === $scope.entity.user.userCode){
