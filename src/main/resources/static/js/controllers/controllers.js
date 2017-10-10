@@ -469,6 +469,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 
     }
 
+/*
     $scope.updateCustomDateFilter = function(){
     	var date = new Date($scope.customDate);
 	   	var strDate = date.toString("MM/dd/yyyy");
@@ -487,7 +488,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
 
     	//$scope.metaSummary = metaSummaryService.getMetaSummary($scope.successMetaSummaryCallback, $scope.errorMetaSummaryCallback);
     };
-
+*/
     $scope.deleteSummary = function (id) {
         inspectionService.getSingleInspection(id, $scope.successReadSingleForDeletionCallback, $scope.errorReadSingleCallback);
     };
