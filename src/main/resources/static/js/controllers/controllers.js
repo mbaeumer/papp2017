@@ -520,7 +520,6 @@ app.controller('summaryController',function($scope, $location, summaryService, e
             $scope.summaryParam.toDate.setHours(21);
             $scope.summaryParam.toDate.setMinutes(59);
             $scope.summaryParam.toDate.setSeconds(59);
-            summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
 
     	}else if (period === 'yesterday'){
     	    $scope.summaryParam.toDate = new Date();
@@ -532,13 +531,13 @@ app.controller('summaryController',function($scope, $location, summaryService, e
             $scope.summaryParam.fromDate.setHours(00);
             $scope.summaryParam.fromDate.setMinutes(00);
             $scope.summaryParam.fromDate.setSeconds(00);
-            summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
     	}
 
     	fileService.startDate = $scope.summaryParam.fromDate;
     	fileService.endDate = $scope.summaryParam.toDate;
     	filterService.startDate = $scope.summaryParam.fromDate;
     	filterService.endDate = $scope.summaryParam.toDate;
+    	summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
     };
 
     $scope.successMetaSummaryCallback = function(data){
@@ -552,7 +551,7 @@ app.controller('summaryController',function($scope, $location, summaryService, e
     };
 
     $scope.setDateFilter('today');
-    summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
+    //summaryService.getSummaries($scope.summaryParam, $scope.successCallback, $scope.errorCallback);
 
     fileService.startDate = $scope.summaryParam.fromDate;
     fileService.endDate = $scope.summaryParam.toDate;
